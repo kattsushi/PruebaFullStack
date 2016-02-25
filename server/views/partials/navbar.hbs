@@ -12,42 +12,13 @@
         <img src="img/logoblanco.gif" alt="logo"
           hide show-xs show-sm
          style="max-height:90px;padding:0px 10px 0px 10px" />
-        <h1 hide show-xs show-gt-xs flex>Intranet </h1>
+        <h1 hide show-xs show-gt-xs flex>Prueba FSJ </h1>
           <span flex></span>
         <section layout="row" layout-align="center rigth">
             <md-button  class="md-raised md-primary"
               aria-label="Inicio"
               ng-href="/#!/" hide show-gt-sm >
             Inicio
-          </md-button>
-          <md-button class="md-raised md-primary" ng-href="/#!/directorio"
-              aria-label="Agenda" hide show-gt-sm >
-            Directorio Telefonico
-          </md-button>
-          <md-button class="md-raised md-primary" ng-href="/#!/empleado"
-              aria-label="Empleado" hide show-gt-sm
-              ng-show="usrConectado.estaConectado">
-            Empleado
-          </md-button>
-          <md-button class="md-raised md-primary" ng-href="/#!/administracion"
-              aria-label="Administración" hide show-gt-sm
-              ng-hide="usrConectado.nivel < 50 ">
-            Administración
-          </md-button>
-          <md-button ng-href="/#!/inicio"
-            class="md-raised md-primary"
-            aria-label="Iniciar Sesion"
-            ng-hide="usrConectado.estaConectado"  >
-            Iniciar Sesion
-          </md-button>
-        </section>
-        <span flex="10"></span>
-          <md-button class="md-raised md-warn"
-            aria-label="Salir"
-            ng-href=""
-            ng-show="usrConectado.estaConectado"
-            ng-click="vm.salir()" >
-            Salir
-          </md-button>
+            </md-button>
     </div>
 </md-toolbar>

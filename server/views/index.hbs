@@ -8,20 +8,14 @@
   <md-toolbar md-tall>
     <div layout="column" class="md-toolbar-tools-bottom inset">
      <a ng-href="/#!/" class="docs-logo ">
-       <img src="img/logoblanco.gif" alt="" style="max-height:100px;padding:0px 10px 0px 10px" />
+       <h2>Prueba Full Stack Javascript</h2>
     </a>
    </div>
  </md-toolbar>
 
     <md-content md-scroll-y flex role="navigation" >
       <nav class="mainNav">
-    		<ul>
-    			<li ng-repeat="menu in vm.titulos" id="titulo"><a href="/#!/">{[{ menu.titulo | uppercase }]}</a>
-    				<ul data-ng-show="menu.Submenu != 0">
-    					<li ng-repeat="submenu in menu.Submenu"><a href="/#!/">{[{ submenu.nombre }]}</a></li>
-    				</ul>
-    			</li>
-    		</ul>
+
     	</nav>
     </md-content>
 </md-sidenav>

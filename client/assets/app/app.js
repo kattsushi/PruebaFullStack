@@ -33,10 +33,11 @@ function appRun ($rootScope,
                  $location,
                  $cookieStore) {
  // Validacion de usuario en las rutas de la app
- $rootScope.$on('$routeChangeStart', function(event, next, current) {
+  $rootScope.$on('$routeChangeStart', function(event, next, current) {
 
    var usuario = $cookieStore.get('usuario');
 
+/*
    if ($cookieStore.get('estaConectado') == false || $cookieStore.get('estaConectado') == null) {
      if(next.templateUrl == 'app/administracion/administracion.html' || next.templateUrl == 'app/empleado/empleado.html'
              || next.templateUrl == 'app/paginas/paginas.html'  ) {
@@ -75,7 +76,7 @@ function appRun ($rootScope,
        $location.path('/');
      }
 
-   }
+   }*/
  })
 }
 
@@ -92,26 +93,6 @@ function appConfig ($routeProvider,
       templateUrl: 'app/main/main.html',
       controller : 'mainCtrl',
       constrollerAs: 'vm'
-    })
-    .when('/directorio', {
-      templateUrl: 'app/directorio/directorio.html',
-      controller : 'directorioCtrl',
-      controllerAs: 'ag'
-    })
-    .when('/inicio',{
-      templateUrl: 'app/inicio/inicio.html',
-      controller : 'inicioCtrl',
-      controllerAs: 'ini'
-    })
-    .when('/administracion',{
-      templateUrl: 'app/administracion/administracion.html',
-      controller: 'AdminCtrl',
-      controllerAs: 'adm'
-    })
-    .when('/paginas',{
-      templateUrl: 'app/paginas/paginas.html',
-      controller: 'paginaCtrl',
-      controllerAs: 'pag'
     })
     .otherwise({
       redirectTo: '/'
