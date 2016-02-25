@@ -10,7 +10,7 @@ var  isProduction = process.env.NODE_ENV === 'production';
 
 router.get('/', function(req, res, next) {
     res.render('index', {
-        title: "Intranet",
+        title: "Prueba Full Stack Javascript",
         env : isProduction
         });
   });
