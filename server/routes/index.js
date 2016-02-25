@@ -1,11 +1,16 @@
-var _ = require('lodash');
-var    express = require('express');
-var    router = express.Router();
-var    uuid = require('node-uuid');
-var    moment = require('moment');
-var    logger = require('../logger');
-var    modelo = require('../models/index');
-// var    controllers = require('../controllers');
+/*
+Configurar Rutas y estructura REST-ful API
+*/
+
+var       _ = require('lodash'),
+    express = require('express'),
+     router = express.Router(),
+       uuid = require('node-uuid'),
+     moment = require('moment'),
+     logger = require('../logger'),
+     modelo = require('../models/index');
+   // controllers = require('../controllers');
+   
 var  isProduction = process.env.NODE_ENV === 'production';
 
 router.get('/', function(req, res, next) {
@@ -15,7 +20,30 @@ router.get('/', function(req, res, next) {
         });
   });
 
-router.get('/menu/:id', function(req, res, next) {
+
+router.get('/api/clientes/:id', function(req, res, next) {
+    
+    modelo.pagina.findAll({ where : {
+                            id : req.params.id },
+                            include : [{
+                            model : modelo.submenu,
+                            as: "Submenu" }] }).then(function (paginas) {
+          res.json(paginas);
+
+        });
+});
+router.get('/api/clientes/', function(req, res, next) {
+    var pag = {};
+    modelo.pagina.findAll({ include : [{
+                            model : modelo.submenu,
+                            as: "Submenu" }] }).then(function (paginas) {
+          res.json(paginas);
+
+        });
+});
+
+
+router.get('/api/productos/:id', function(req, res, next) {
     var pag = {};
     modelo.pagina.findAll({ where : {
                             id : req.params.id },
@@ -26,7 +54,7 @@ router.get('/menu/:id', function(req, res, next) {
 
         });
 });
-router.get('/menu/', function(req, res, next) {
+router.get('/api/productos/', function(req, res, next) {
     var pag = {};
     modelo.pagina.findAll({ include : [{
                             model : modelo.submenu,
@@ -35,6 +63,8 @@ router.get('/menu/', function(req, res, next) {
 
         });
 });
+
+
 
 router.get('/inicio',function(req,res,next) {
 
@@ -73,30 +103,6 @@ router.post('/inicio', function (req, res, next) {
   })
 })
 
-router.get('/directorio',function(req,res,next) {
-
-    modelo.usuario.findAll({include : [{
-                                  model: modelo.directorio,
-                                  as :"Directorio"
-                                }]
-                          }).then(function (usuarios) {
-          if (usuarios == null){
-            return null;
-          } else {
-            res.jsonp(usuarios);
-            }
-    });
-});
-
-
-router.get('/ubicacion', function (req, res, next) {
-   modelo.directorio.findAll({
-     attributes : ['Ubicacion'],
-     group : ['Ubicacion']
-   }).then(function(ubi){
-     res.jsonp(ubi);
-   });
-})
 
 router.get('/error/500', function(req, res, next) {
     res.render('error', {
