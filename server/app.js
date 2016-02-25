@@ -4,14 +4,14 @@
 //----------------------------------------------------------------
 //Cargando Dependencias
 //----------------------------------------------------------------
-var express = require('express');
-var path = require('path');
-//var middleware = require('./middleware'); se comenta por pruebas
-var config = require('./config');
-var logger = require('./logger');
-var routes = require('./routes');
-var pkg = require('../package.json');
-var multer = require('multer');
+var express = require('express'),
+       path = require('path'),
+//  middleware = require('./middleware'), se comenta por pruebas
+     config = require('./config'),
+     logger = require('./logger'),
+     routes = require('./routes'),
+        pkg = require('../package.json'),
+     multer = require('multer');
 // var modelos = require('./models/db.js');
 //----------------------------------------------------------------
 //Inicializando Express JS app
@@ -37,8 +37,8 @@ var helpers = require('./helpers');
 //----------------------------------------------------------------
 //Configuracion del bodyParser
 //----------------------------------------------------------------
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+var   bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser');
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(cookieParser(config.cookie.secret));

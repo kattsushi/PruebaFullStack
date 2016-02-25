@@ -1,12 +1,12 @@
 {
   "name": "Intranet",
-  "description": "Aplicacion nodejs + express + Posgresql + handlerbars + sass + gulp",
+  "description": "Aplicacion Prueba Full Stack Javascript nodejs + express + Mysql + handlerbars + Sass + Gulp + AngularJS",
   "version": "0.2.0",
   "private": false,
   "scripts": {
     "start": "node server/bin/www"
   },
-  "homepage": "https://github.com/kattsushi/Intranet-app/",
+  "homepage": "https://github.com/kattsushi/PruebaFullStack",
   "licenses": [
     {
       "type": "MIT",
@@ -15,9 +15,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/kattsushi/Intranet-app/"
+    "url": "https://github.com/kattsushi/PruebaFullStack"
   },
-  "bugs": "https://github.com/kattsushi/Intranet-app/issues",
+  "bugs": "https://github.com/kattsushi/PruebaFullStack/issues",
   "config": {
     "url": "http://localhost:3000",
     "port": 3000,
@@ -26,7 +26,7 @@
       "port": "3306",
       "user": "root",
       "password": "",
-      "database": "express-seed",
+      "database": "pruebafsj",
       "multipleStatements": "true"
     },
     "sqlite": {
@@ -36,7 +36,7 @@
       "secret": "3095cd1975c64b9f8ee24b5346a4e593"
     },
     "session": {
-      "secret": "1234567890QWERTY"
+      "secret": "1234567890ANDRESJIMENEZ"
     },
     "mail": {
       "transport": "SMTP",

@@ -3,7 +3,7 @@ var path = require('path'),
 
 config = {
   session: {
-    secret: "1234567890QWERTY1"
+    secret: "1234567890ANDRESJIMENEZ"
   },
   mail: {
     transport: 'SES',

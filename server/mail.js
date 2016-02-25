@@ -1,7 +1,7 @@
-var _ = require('lodash'),
+var         _  =  require('lodash'),
     nodemailer = require('nodemailer'),
-    config = require('./config'),
-    logger = require('./logger');
+        config = require('./config'),
+        logger = require('./logger');
 
 
 function Mailer(opts) {
@@ -19,8 +19,7 @@ function Mailer(opts) {
 
 
 Mailer.prototype.fromAddress = function() {
-    var from = config.mail && config.mail.fromaddress,
-        domain;
+    var from = config.mail && config.mail.fromaddress, domain;
 
     if (!from) {
         // Extract the domain name from url set in config.js
