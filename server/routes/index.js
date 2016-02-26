@@ -56,11 +56,17 @@ router.get('/api/clientes/', function(req, res, next) {
 
 router.get('/api/compras/:documento', function(req, res, next) {
     
-       modelo.Compras.findAll({include : [
-          {model:modelo.Cliente, require: true, as :"Cliente"}
-          ] }).then(function (comp) {
+    modelo.Compras.findAll({attributes:['id','id_producto',
+                                            'id_sede','id_cliente',
+                                            'precio','descripcion',
+                                            'fecha'],
+                                include:[{
+                                  model: modelo.Productos,
+                                  as : "Prodcuto"
+                                }]
+      }).then(function (comp) {
             res.json(comp);
-          })
+      })
 });
 
 

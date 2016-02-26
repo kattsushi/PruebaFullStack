@@ -11,6 +11,7 @@ var sequelize = new Sequelize("pruebafsj","root","",{
 	    loggin: false,
       define: {
         timestamps: false,
+        freezeTableName: true
         }
     });
 //--------------------------------------------------------------
@@ -110,6 +111,7 @@ Productos.hasMany( Compras,{
 //--------------------------------------------------------------
 //--Mapeo Clientes - Compras 1 - N
 //--------------------------------------------------------------
+/*
 Clientes.hasMany( Compras,{
                      foreignKey:"id_cliente"
                         });
@@ -119,26 +121,34 @@ Clientes.hasMany( Compras,{
 Sedes.hasMany( Compras,{
                      foreignKey:"id_sede"
                         });  
-//--------------------------------------------------------------
-//--Mapeo Compras - Productos 1 - 1
-//--------------------------------------------------------------
-Compras.belongsTo( Productos, {
-        as : "Producto",
-        foreingKey: "id_producto"
-}) 
+
 //--------------------------------------------------------------
 //--Mapeo Compras - Sedes 1 - 1
 //--------------------------------------------------------------
 Compras.belongsTo( Sedes, {
         as : "Sede",
         foreingKey: "id_sede"
-})                           
+})
+
+
+//--------------------------------------------------------------
+//--Mapeo Compras - Productos 1 - 1
+//--------------------------------------------------------------
+
+Compras.belongsTo( Productos, {
+        foreingKey: "id_producto",
+        as : "Producto"
+}) 
+    */                       
 //--------------------------------------------------------------
 //--Mapeo Compras - Cliente 1 - 1
 //--------------------------------------------------------------
-Compras.belongsTo( Clientes, {
-        as : "Cliente",
-        foreingKey: "id_cliente"
+Compras.hasOne( Productos, {
+        foreingKey: "id_producto"
+}) 
+Compras.belongsTo( Productos, {
+        foreingKey: "id_producto",
+        as : "Producto"
 })                                              
                         
 //--------------------------------------------------------------
