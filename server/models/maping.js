@@ -8,7 +8,10 @@ var Sequelize = require('sequelize'),
 var sequelize = new Sequelize("pruebafsj","root","",{
       dialect:"mysql", //OTROS VALORES: postgres, mysql, mariadb
 	    //la propiedad storage SOLO ES PARA sqlite
-	    loggin: false
+	    loggin: false,
+      define: {
+        timestamps: false,
+        }
     });
 //--------------------------------------------------------------
 //EL CODIGO EN ESTA FUNCION SE EJECTUA
@@ -101,21 +104,42 @@ var Log = sequelize.define("log",{
 //--------------------------------------------------------------
 //--Mapeo Productos - Compras - Submenu 1 - N
 //--------------------------------------------------------------
-Productos.hasMany(Compras,{
+Productos.hasMany( Compras,{
                     foreignKey:"id_producto"
                         });
 //--------------------------------------------------------------
 //--Mapeo Clientes - Compras 1 - N
 //--------------------------------------------------------------
-Clientes.hasMany(Compras,{
+Clientes.hasMany( Compras,{
                      foreignKey:"id_cliente"
                         });
 //--------------------------------------------------------------
 //--Mapeo Sedes - Compras 1 - N
 //--------------------------------------------------------------
-Sedes.hasMany(Compras,{
+Sedes.hasMany( Compras,{
                      foreignKey:"id_sede"
-                        });                        
+                        });  
+//--------------------------------------------------------------
+//--Mapeo Compras - Productos 1 - 1
+//--------------------------------------------------------------
+Compras.belongsTo( Productos, {
+        as : "Producto",
+        foreingKey: "id_producto"
+}) 
+//--------------------------------------------------------------
+//--Mapeo Compras - Sedes 1 - 1
+//--------------------------------------------------------------
+Compras.belongsTo( Sedes, {
+        as : "Sede",
+        foreingKey: "id_sede"
+})                           
+//--------------------------------------------------------------
+//--Mapeo Compras - Cliente 1 - 1
+//--------------------------------------------------------------
+Compras.belongsTo( Clientes, {
+        as : "Cliente",
+        foreingKey: "id_cliente"
+})                                              
                         
 //--------------------------------------------------------------
 // Exportar modelos a otros modulos

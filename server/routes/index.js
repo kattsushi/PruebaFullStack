@@ -20,66 +20,67 @@ router.get('/', function(req, res, next) {
         });
   });
 
+// Productos ----------------------------------------------
+router.get('/api/productos/:id', function(req, res, next) {
+    
+    modelo.Productos.findAll({ where : {
+                            id : req.params.id },
+                            }).then(function (prod) {
+          res.json(prod);
+        });
+});
+router.get('/api/productos/', function(req, res, next) {
+     
+    modelo.Productos.findAll({}).then(function (prod) {
+          res.json(prod);
+        });
+});
 
+
+// Clientes--------------------------------------------
 router.get('/api/clientes/:id', function(req, res, next) {
     
-    modelo.pagina.findAll({ where : {
-                            id : req.params.id },
-                            include : [{
-                            model : modelo.submenu,
-                            as: "Submenu" }] }).then(function (paginas) {
-          res.json(paginas);
+    modelo.Clientes.findAll({ where : {
+                            id : req.params.id }
+                             }).then(function (cli) {
+          res.json(cli);
 
         });
 });
 router.get('/api/clientes/', function(req, res, next) {
-    var pag = {};
-    modelo.pagina.findAll({ include : [{
-                            model : modelo.submenu,
-                            as: "Submenu" }] }).then(function (paginas) {
-          res.json(paginas);
-
+    
+    modelo.Clientes.findAll({}).then(function (cli) {
+          res.json(cli);
         });
 });
 
-
-router.get('/api/productos/:id', function(req, res, next) {
-    var pag = {};
-    modelo.pagina.findAll({ where : {
-                            id : req.params.id },
-                            include : [{
-                            model : modelo.submenu,
-                            as: "Submenu" }] }).then(function (paginas) {
-          res.json(paginas);
-
-        });
+router.get('/api/compras/:documento', function(req, res, next) {
+    
+       modelo.Compras.findAll({include : [
+          {model:modelo.Cliente, require: true, as :"Cliente"}
+          ] }).then(function (comp) {
+            res.json(comp);
+          })
 });
-router.get('/api/productos/', function(req, res, next) {
-    var pag = {};
-    modelo.pagina.findAll({ include : [{
-                            model : modelo.submenu,
-                            as: "Submenu" }] }).then(function (paginas) {
-          res.json(paginas);
 
-        });
-});
+
 
 
 
 router.get('/inicio',function(req,res,next) {
 
     modelo.usuario.findAll({
-                            attributes :['id','nombre','usuario','nivel']
-                            ,where : {
-                              usuario : req.query.nombreUsuario,
-                              contraseña : req.query.clave
-                            }
-                          }).then(function (usuarios) {
-                          if (usuarios == null){
-                            return null;
-                          } else {
-                            res.jsonp(usuarios);
-                            }
+        attributes :['id','nombre','usuario','nivel']
+        ,where : {
+          usuario : req.query.nombreUsuario,
+          contraseña : req.query.clave
+        }
+      }).then(function (usuarios) {
+      if (usuarios == null){
+        return null;
+      } else {
+        res.jsonp(usuarios);
+        }
     })
 });
 
