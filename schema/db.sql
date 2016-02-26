@@ -1,99 +1,166 @@
-CREATE TABLE `Usuarios` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`usuario` varchar(128) NOT NULL DEFAULT '-',
-`nombre` varchar(128) NOT NULL DEFAULT '-',
-`contraseña` varchar(32) NOT NULL DEFAULT '-',
-`dominio` varchar(32) NOT NULL DEFAULT '',
-`nivel` int(11) NOT NULL DEFAULT 0,
-`falsolog` int(11) NOT NULL DEFAULT 0,
-`maxfalsolog` int(11) NOT NULL DEFAULT 999,
-`activo` char(1) NOT NULL DEFAULT 'Y',
-`correo` varchar(128) NOT NULL DEFAULT '',
-`nota` varchar(255) NOT NULL DEFAULT '',
-`ordencorto` int(11) NOT NULL,
-PRIMARY KEY (`id`) ,
-UNIQUE INDEX `usuario_idx` (`usuario` ASC, `activo` ASC)
-)
-DEFAULT CHARACTER SET = utf8;
+-- MySQL dump 10.13  Distrib 5.6.24, for Win32 (x86)
+--
+-- Host: 127.0.0.1    Database: prueba_pleisi
+-- ------------------------------------------------------
+-- Server version	5.6.24
 
-CREATE TABLE `Paginas` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`item` int(11) NOT NULL,
-`titulo` varchar(255) NULL DEFAULT NULL,
-`link` varchar(255) NULL DEFAULT NULL,
-`activo` varchar(255) NULL DEFAULT 'Y',
-`tags` varchar(255) NULL DEFAULT '',
-`descripcion` varchar(255) NULL DEFAULT '',
-`creado` datetime NULL DEFAULT '0000-00-00',
-`actualizado` datetime NULL DEFAULT '0000-00-00',
-PRIMARY KEY (`item`)
-)
-DEFAULT CHARACTER SET = utf8;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE `Contenido` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`item` int(11) NOT NULL DEFAULT '0',
-`ordencorto` int(11) NULL DEFAULT '0',
-`objhijo` char(1) NOT NULL DEFAULT 'T' COMMENT 'texto, forma, archivo, imagen.',
-`archivo` int(11) NULL DEFAULT '0',
-`nombre` varchar(32) NOT NULL DEFAULT '',
-`data` text NOT NULL COMMENT '\'\'',
-PRIMARY KEY (`id`, `item`)
-)
-DEFAULT CHARACTER SET = utf8;
+--
+-- Table structure for table `clientes`
+--
 
-CREATE TABLE `Archivos` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`objpadre` int(11) NOT NULL DEFAULT '0',
-`ordencorto` int(11) NULL DEFAULT '0',
-`nombre` varchar(64) NOT NULL DEFAULT '',
-`extencion` varchar(3) NULL DEFAULT '',
-`creado` datetime NULL DEFAULT '0000-00-00' ON UPDATE CURRENT_TIMESTAMP,
-`actualizado` date NULL,
-PRIMARY KEY (`id`)
-)
-DEFAULT CHARACTER SET = utf8;
+DROP TABLE IF EXISTS `clientes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `clientes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `documento` int(11) DEFAULT NULL,
+  `nombres` varchar(80) DEFAULT NULL,
+  `detalles` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TRIGGER ON `Archivos` FOR EACH ROW ;
+--
+-- Dumping data for table `clientes`
+--
 
-CREATE TABLE `Items` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`nombre` varchar(32) NOT NULL DEFAULT '',
-`objpadre` int(11) NOT NULL DEFAULT '0',
-`usuario` int(11) NOT NULL DEFAULT '0',
-`orden` char(1) NOT NULL,
-`fecha` date NULL DEFAULT '0000-00-00',
-`fecvaldesde` datetime NOT NULL DEFAULT '0000-00-00',
-`fecvalhasta` datetime NOT NULL DEFAULT '0000-00-00',
-`mostrar` char(1) NULL DEFAULT 'S',
-`logeado` char(1) NULL,
-PRIMARY KEY (`id`) ,
-INDEX `padre_idx` (`objpadre` ASC)
-)
-DEFAULT CHARACTER SET = utf8;
+LOCK TABLES `clientes` WRITE;
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,123456,'Arturo Lopez',NULL),(2,234567,'Carlos Rodriguez',NULL),(3,345678,'Daniel Acosta',NULL),(4,456789,'Jason Martinez',NULL),(5,567890,'Felipe Salazar',NULL),(6,987654,'Alejandra Rodriguez',NULL),(7,876543,'Daniela Arias',NULL),(8,765432,'Haroll Cuervo',NULL),(9,654321,'Jenny Perez',NULL);
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE `Nivel` (
-`id` int(11) NOT NULL,
-`nombre` varchar(32) NOT NULL,
-PRIMARY KEY (`id`)
-)
-DEFAULT CHARACTER SET = utf8;
+--
+-- Table structure for table `compras`
+--
 
-CREATE TABLE `Dominios` (
-`id` int(11) NOT NULL,
-`nombre` varchar(32) NOT NULL,
-PRIMARY KEY (`id`)
-)
-DEFAULT CHARACTER SET = utf8;
+DROP TABLE IF EXISTS `compras`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `compras` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) DEFAULT NULL,
+  `id_producto` int(11) DEFAULT NULL,
+  `id_sede` int(11) DEFAULT NULL,
+  `precio` int(11) DEFAULT NULL,
+  `descripcion` text,
+  `fecha` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_cliente` (`id_cliente`),
+  KEY `id_producto` (`id_producto`),
+  KEY `id_sede` (`id_sede`),
+  CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`),
+  CONSTRAINT `compras_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`),
+  CONSTRAINT `compras_ibfk_3` FOREIGN KEY (`id_sede`) REFERENCES `sedes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-ALTER TABLE `Nivel` ADD CONSTRAINT `Nivel_Usuarios` FOREIGN KEY (`id`) REFERENCES `Usuarios` (`nivel`);
-ALTER TABLE `Dominios` ADD CONSTRAINT `fk_Dominios_Usuarios_1` FOREIGN KEY (`id`) REFERENCES `Usuarios` (`dominio`);
-ALTER TABLE `Items` ADD CONSTRAINT `fk_Items_Paginas_1` FOREIGN KEY (`id`) REFERENCES `Paginas` (`item`);
-ALTER TABLE `Items` ADD CONSTRAINT `fk_Items_Contenido_1` FOREIGN KEY (`id`) REFERENCES `Contenido` (`item`);
-ALTER TABLE `Usuarios` ADD CONSTRAINT `fk_Usuarios_Items_1` FOREIGN KEY (`id`) REFERENCES `Items` (`usuario`);
-ALTER TABLE `Archivos` ADD CONSTRAINT `fk_Archivos_Contenido_1` FOREIGN KEY (`id`) REFERENCES `Contenido` (`archivo`);
+--
+-- Dumping data for table `compras`
+--
 
+LOCK TABLES `compras` WRITE;
+/*!40000 ALTER TABLE `compras` DISABLE KEYS */;
+INSERT INTO `compras` VALUES (19,1,2,1,1000,NULL,'2015-08-01 15:07:30'),(20,2,2,1,NULL,NULL,'2015-08-02 15:07:30'),(21,3,1,1,NULL,NULL,'2015-08-02 15:07:30'),(22,4,4,2,10000,NULL,'2015-08-03 15:07:30'),(23,5,3,2,NULL,NULL,'2015-08-03 15:07:30'),(24,6,5,3,NULL,NULL,'2015-08-03 15:07:30'),(25,7,1,1,NULL,NULL,'2015-08-03 15:07:30'),(26,8,2,1,30000,NULL,'2015-08-03 15:07:30'),(27,9,5,1,NULL,NULL,'2015-08-03 15:07:30'),(28,2,4,2,1000,NULL,'2015-08-03 15:07:30'),(29,2,2,NULL,NULL,'dañado','2015-08-03 15:07:30'),(30,2,1,NULL,NULL,NULL,'2015-08-03 15:07:30'),(31,1,NULL,NULL,NULL,NULL,'2015-08-03 15:07:30'),(32,1,NULL,NULL,NULL,NULL,'2015-08-03 15:07:30'),(33,1,NULL,NULL,NULL,NULL,'2015-08-03 15:07:30'),(34,1,NULL,NULL,NULL,NULL,'2015-08-03 15:07:30'),(35,NULL,3,NULL,9999,NULL,'2015-08-03 15:07:30'),(36,NULL,1,NULL,9999,NULL,'2015-08-03 15:07:30'),(37,NULL,5,NULL,NULL,NULL,'2015-08-03 15:07:30'),(38,3,2,NULL,NULL,NULL,'2015-08-03 15:07:30'),(39,3,NULL,NULL,1000,NULL,'2015-08-03 15:07:30'),(40,4,2,NULL,NULL,NULL,'2015-08-03 15:07:30'),(41,NULL,NULL,NULL,NULL,NULL,'2015-08-03 15:07:30');
+/*!40000 ALTER TABLE `compras` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `log`
+--
+
+DROP TABLE IF EXISTS `log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime DEFAULT NULL,
+  `descripcion` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log`
+--
+
+LOCK TABLES `log` WRITE;
+/*!40000 ALTER TABLE `log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `productos`
+--
+
+DROP TABLE IF EXISTS `productos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `productos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `producto` varchar(40) DEFAULT NULL,
+  `precio` int(11) DEFAULT NULL,
+  `descripcion` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `productos`
+--
+
+LOCK TABLES `productos` WRITE;
+/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+INSERT INTO `productos` VALUES (1,'Producto1',100000,'DProducto1'),(2,'Producto2',32000,'DProducto2'),(3,'Producto3',2000,'DProducto3'),(4,'Producto4',30000,'DProducto4'),(5,'Producto5',140500,'DProducto5');
+/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sedes`
+--
+
+DROP TABLE IF EXISTS `sedes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sedes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sede` varchar(40) DEFAULT NULL,
+  `direccion` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sedes`
+--
+
+LOCK TABLES `sedes` WRITE;
+/*!40000 ALTER TABLE `sedes` DISABLE KEYS */;
+INSERT INTO `sedes` VALUES (1,'Sur','Cll 1 # 6 23'),(2,'Norte','Cll 100 # 19 31'),(3,'Centro','Cll 12 # 4 2');
+/*!40000 ALTER TABLE `sedes` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-08-10 10:37:05
 
 
 
