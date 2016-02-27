@@ -1,3 +1,4 @@
+/* global resourceResponseHandler */
 (function(){
   'use strict'
   function cliServ ($resource, $location) {
@@ -12,6 +13,14 @@
                   },
            post:{
               method: 'POST'
+           },
+           delete:{
+             method:'DELETE',
+             params: {id: '@id'}
+           },
+           update : {
+             method:'PUT',
+             params : {id:'@id'}
            },  
            isArray: true,
          });

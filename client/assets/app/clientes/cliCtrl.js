@@ -46,6 +46,14 @@
              for(var i in $scope.clientes) {
                     if($scope.clientes[i].id == $scope.newCliente.id) {
                         $scope.clientes[i] = $scope.newCliente;
+                        
+                        var data = {id: $scope.clientes[i].id };
+                
+                        cliServ.update($scope.newCliente,data).$promise.then(function (e) {
+                            alert("elemento actualizado");
+                        }, function (err) {
+                        console.log(err); 
+                        });
                     }
              }                
         }
@@ -57,12 +65,25 @@
         
         for(var i in $scope.clientes) {
             if($scope.clientes[i].id == id) {
+                
+                var data = {id: $scope.clientes[i].id };
+                
+                cliServ.delete({},data).$promise.then(function (e) {
+                    alert("elemento eliminado");
+                }, function (err) {
+                   console.log(err); 
+                });
+                console.log($scope.clientes[i].id);              
+                
                 $scope.clientes.splice(i,1);
                 $scope.newCliente = {};
                 $scope.numeroDeclientes = $scope.clientes.length;
                 
-                cliServ.delete({id: $scope.clientes.id})
+                
+               
+                
                 console.log($scope.numeroDeclientes);
+                
             }
         }
         

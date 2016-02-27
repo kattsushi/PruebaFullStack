@@ -59,24 +59,45 @@ router.post('/api/clientes/', function(req, res, next) {
     
 router.put('/api/clientes/:id', function(req, res, next) {
     var id = req.params.id;
-    console.log("este es mi id: " + id);
+    
+    var data = req.body;
+    
+    modelo.Clientes.update(
+                 {documento : data.documento,
+                  nombres : data.nombres,
+                  detalles : data.detalles},
+                  {where: { id: id }}).then(function(rowUpdate){ 
+          if(rowUpdate === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE CLIENTE"  
+                              }).then(function (e) {
+                                console.log('Actualizado el registro del cliente'); 
+                                console.log("este es mi id: " + id);               
+                            }, function(err){
+                              console.log("algo salio mal -- " + err); 
+                          });
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+   
 });  
   
 router.delete('/api/clientes/:id', function(req, res, next) {
     var id = req.params.id;
     
     modelo.Clientes.destroy({
-                  where: {
-                      id: id //this will be your id that you want to delete
-                  }
-        }).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+          where: { id: id }}).then(function(rowDeleted){ 
           if(rowDeleted === 0){
              modelo.Log.create({
                           fecha: new Date(),
                           descripcion: id + " DELETE CLIENTE"  
                               }).then(function (e) {
                                 console.log('Eliminado registro del cliente');                
-                            })
+                            }, function(err){
+                                console.log("algo salio mal -- " + err); 
+                            });
               }     
         }, function(err){
             console.log("algo salio mal -- " + err); 
