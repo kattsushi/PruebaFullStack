@@ -284,24 +284,105 @@ router.delete('/api/sedes/:id', function(req, res, next) {
     console.log("este es mi id: " + id);
 });  
 
+// Compras  --------------------------------------------
 
-
-
-
-router.get('/api/compras/:documento', function(req, res, next) {
+router.get('/api/compras/:id', function(req, res, next) {
     
-    modelo.Compras.findAll({attributes:['id','id_producto',
-                                            'id_sede','id_cliente',
-                                            'precio','descripcion',
-                                            'fecha'],
-                                include:[{
-                                  model: modelo.Productos,
-                                  as : "Prodcuto"
-                                }]
-      }).then(function (comp) {
-            res.json(comp);
-      })
+    modelo.Sedes.findAll({ where : {
+                            id : req.params.id }
+                             }).then(function (sed) {
+          res.json(sed);
+
+        });
 });
+
+router.get('/api/compras/', function(req, res, next) {
+    
+    modelo.Compras.findAll({
+      attributes : ['id','id_cliente','id_producto',
+                    'id_sede','precio','descripcion','fecha']
+    }).then(function (sed) {
+          res.json(sed);
+        });
+});
+
+
+router.post('/api/compras/', function(req, res, next) {
+    var data = req.body;
+    modelo.Compras.create({
+      id_cliente : data.id_cliente,
+      id_producto: data.id_producto,
+      id_sede: data.id_sede,
+      precio: data.precio,
+      descripcion: data.descripcion,
+      fecha: new Date()
+    }).then(function (sed) {
+        modelo.Log.create({
+          fecha: new Date(),
+          descripcion: data.id + " " + data.documento + " INSERT Compras"  
+          }).then(function (e) {
+            console.log("se creo correctamente el registro en la tabla Compras");
+      })
+    })
+    console.log("este es mi dni: " + data.documento);
+});  
+  
+    
+router.put('/api/compras/:id', function(req, res, next) {
+    var id = req.params.id;
+    
+    var data = req.body;
+    
+    console.log("esto esta bien" + id)
+    modelo.Compras.update(
+                 {id_cliente : data.id_cliente,
+                  id_producto : data.id_producto,
+                  id_sede : data.id_sede,
+                  precio: data.precio,
+                  descripcion: data.descripcion,
+                  fecha : new Date()
+                  },
+                  {where: { id: id }}).then(function(rowUpdate){ 
+          if(rowUpdate === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE COMPRA"  
+                              }).then(function (e) {
+                                console.log('Actualizado el registro de la Compra'); 
+                                console.log("este es mi id: " + id);               
+                            }, function(err){
+                              console.log("algo salio mal -- " + err);
+                              console.log("esto esta bien" + id + data.sede) 
+                          });
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+   
+});  
+  
+router.delete('/api/compras/:id', function(req, res, next) {
+    var id = req.params.id;
+    
+    modelo.Compras.destroy({
+          where: { id: id }}).then(function(rowDeleted){ 
+          if(rowDeleted === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE compras"  
+                              }).then(function (e) {
+                                console.log('Eliminado registro del compra');                
+                            }, function(err){
+                                console.log("algo salio mal -- " + err); 
+                            });
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+    
+    console.log("este es mi id: " + id);
+});  
+
 
 
 

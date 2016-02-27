@@ -57,8 +57,7 @@
                     alert("elemento eliminado");
                 }, function (err) {
                    console.log(err); 
-            });
-            console.log($scope.clientes[i].id);              
+            });            
             $scope.clientes.splice(i,1);
             $scope.newCliente = {};
             $scope.numeroDeclientes = $scope.clientes.length;

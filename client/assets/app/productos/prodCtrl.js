@@ -14,9 +14,7 @@
                           
                       }, this);
                       $scope.numeroDeProductos = $scope.productos.length;
-                      console.log(data);
-                      
-    });
+                    });
              
     $scope.onClickMenu = function () {
                 $mdSidenav('left').toggle();
@@ -58,8 +56,7 @@
                     alert("elemento eliminado");
                 }, function (err) {
                    console.log(err); 
-            });
-            console.log($scope.productos[i].id);              
+            });             
             $scope.productos.splice(i,1);
             $scope.newProducto = {};
             $scope.numeroDeProductos = $scope.productos.length;

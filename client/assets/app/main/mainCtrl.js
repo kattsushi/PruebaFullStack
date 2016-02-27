@@ -1,75 +1,97 @@
 (function(){
     'use strict'
-    function mainCtrl($scope,
-                      $timeout,
-                      $mdSidenav,
-                      $rootScope,
-                      mainService,
-                      $mdDialog,
-                      $mdMedia,
-                      $cookieStore,
-                      $location,
-                      $http,
-                      $q,
-                      $log ) {
-
-            var vm = this;
-
+    function mainCtrl($scope, $timeout, $mdSidenav,
+                      $rootScope, mainServ, $mdDialog,
+                      $mdMedia, $cookieStore, $location,
+                      $http, $q, $log ) {
+    var compras = this;
+    
+    $scope.compras = [];
+    
+    mainServ.query().$promise.then(function (data) {
+                      data.forEach(function(e) {
+                       $scope.compras.push(e);
+                          
+                      }, this);
+                      $scope.numeroDeCompras = $scope.compras.length;
+                                       
+    });
              
-
-      
-
-            //    console.log(JSON.parse(vm.titulos));
-
-            vm.onClickMenu = function () {
+    $scope.onClickMenu = function () {
                 $mdSidenav('left').toggle();
             }
-
-            /*---------------------------------------------
-            Control de cookies para autenticar usuario
-            */
-            $scope.usrConectado = {nombre: "", nivel: '', estaConectado: ''};
-
-            var usr = $cookieStore.get('usuario');
-
-            if (usr != null) {
-              $scope.usrConectado.nombre = usr.nombre;
-              $scope.usrConectado.nivel = usr.nivel;
-              $scope.usrConectado.estaConectado = true;
-            }else {
-              $scope.usrConectado.valogin = false
-            };
-
-            vm.salir = function() {
-              $scope.usrConectado = {nombre: '', nivel: '', estaConectado: ''};
-
-              $cookieStore.remove('estaConectado');
-              $cookieStore.remove('usuario');
-
-              $location.path('/inicio');
-            };
-
-
-
-
-    //------------------------------------------------------------------------------------------------------
-
-
-
-
+    
+    var uid = 1;       
+    // Guardar Sede y Actualizar---------------------------------------- 
+    $scope.saveSede = function() {
+        if($scope.newSede.id == null) {
+            $scope.newSede.id = uid++;
+            $scope.compras.push($scope.newSede);
+            $scope.numeroDeCompras = $scope.compras.length;
+            mainServ.save($scope.newSede);
+            console.log($scope.numeroDeCompras);
+        } else {
+            for(var i in $scope.compras) {
+                if($scope.compras[i].id == $scope.newSede.id) {
+                    $scope.compras[i] = $scope.newSede;
+                    var data = {id: $scope.compras[i].id };
+                    mainServ.update(data, $scope.newSede).$promise.then(function (e) {
+                            alert("elemento actualizado");
+                        }, function (err) {
+                        console.log(err); 
+                        });
+                    }
+                }                
+        }   
+        $scope.newSede = {};
     }
-      angular.module('App')
-             .controller('mainCtrl',['$scope',
-                                     '$timeout',
-                                     '$mdSidenav',
-                                     '$rootScope',
-                                     'mainService',
-                                     '$mdDialog',
-                                     '$mdMedia',
-                                     '$cookieStore',
-                                     '$location',
-                                     '$http',
-                                     '$q',
-                                     '$log',
-                                     mainCtrl]);
+
+    // Eliminar Sede----------------------------------------------------- 
+    // Observacion:si el Sede tiene compras no se eliminara por constrain
+    // Todo : cachear el error del constrain
+    $scope.delete = function(id) {
+      for(var i in $scope.compras) {
+        if($scope.compras[i].id == id) {
+            var data = {id: $scope.compras[i].id };
+            mainServ.delete({},data).$promise.then(function (e) {
+                    alert("elemento eliminado");
+                }, function (err) {
+                   console.log(err); 
+            });             
+            $scope.compras.splice(i,1);
+            $scope.newSede = {};
+            $scope.numeroDeCompras = $scope.compras.length;
+            console.log($scope.numeroDeCompras);
+            }
+        }
+    }
+    
+    // Seleccionar Sede para editarlo---------------------------------
+    $scope.edit = function(id) {
+        console.log(id);
+        for(var i in $scope.compras) {
+            if($scope.compras[i].id == id) {
+                $scope.newSede = angular.copy($scope.compras[i]);
+            }
+        }
+    }   
+    // Control para el paginado------------------------------------------ 
+    $scope.pageSize     = 8;
+    $scope.currentPage  = 0;
+    $scope.numeroDePag = function () {
+         
+    if ($scope.numeroDeCompras > $scope.pageSize) {
+            return Math.ceil( $scope.numeroDeCompras / $scope.pageSize);            
+    }else{
+             return 1;
+    }
+}
+}
+//------------------------------------------------------------------------------------------------------
+angular.module('App')
+        .controller('mainCtrl',['$scope', '$timeout','$mdSidenav',
+                                '$rootScope', 'mainServ', '$mdDialog',
+                                '$mdMedia', '$cookieStore','$location',
+                                '$http', '$q', '$log',
+                                mainCtrl]);
 })();

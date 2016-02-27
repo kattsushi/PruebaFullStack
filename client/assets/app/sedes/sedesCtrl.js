@@ -14,9 +14,7 @@
                           
                       }, this);
                       $scope.numeroDeSedes = $scope.sedes.length;
-                      console.log(data);
-                      
-    });
+                     });
              
     $scope.onClickMenu = function () {
                 $mdSidenav('left').toggle();
@@ -58,8 +56,7 @@
                     alert("elemento eliminado");
                 }, function (err) {
                    console.log(err); 
-            });
-            console.log($scope.sedes[i].id);              
+            });            
             $scope.sedes.splice(i,1);
             $scope.newSede = {};
             $scope.numeroDeSedes = $scope.sedes.length;
