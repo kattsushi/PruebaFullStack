@@ -1,33 +1,32 @@
+
 (function(){
   'use strict'
-  function mainServ ($resource, $location) {
-      var uri = $location.protocol() +'://'+location.host+'/api/compras/:documento'
+  function prodServ ($resource, $location) {
+      var uri = $location.protocol() +'://'+location.host+'/api/productos/:id'
       return $resource( uri, {},
          {
            get :{
               method:'GET',
               transformResponse: function (data, headers) {
                     return JSON.parse(data).list; 
-                    },
-              params: {documento: '@documento'},      
-              isArray: true,
+                    }
                   },
            post:{
               method: 'POST'
            },
            delete:{
              method:'DELETE',
-             params: {documento: '@documento'}
+             params: {id: '@id'}
            },
            update : {
              method:'PUT',
-             params : {documento:'@documento'}
+             params : {id:'@id'}
            },  
            isArray: true,
          });
    }
 
   angular.module('App')
-         .factory('mainServ', ['$resource','$location',mainServ]);
+         .factory('prodServ', ['$resource','$location',prodServ]);
 
 })();

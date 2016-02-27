@@ -1,1 +1,0 @@
-select ubicacion from directorio group by ubicacion

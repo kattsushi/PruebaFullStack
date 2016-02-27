@@ -39,18 +39,14 @@ var   coreHelpers = {},
           '/app/ui.js',
           '/app/app.js',
           '/app/main/mainCtrl.js',
-          '/app/main/mainServ.js'
-          // ,'/app/directorio/directorioCtrl.js',
-          //'/app/directorio/directorioServ.js',
-          // '/app/directorio/directorioFilt.js',
-          // '/app/inicio/inicioCtrl.js',
-          // '/app/usuario/usuarioServ.js',
-          // '/app/administracion/adminCtrl.js',
-          // '/app/paginas/paginasCtrl.js',
-          // '/app/paginas/paginasServ.js',
-          // '/app/calendario/calendarioDir.js'
-          //, '/js/vendor.min.js',
-          //'/js/app.min.js'
+          '/app/main/mainServ.js',
+          '/app/productos/prodCtrl.js',
+          '/app/productos/prodServ.js',
+          '/app/clientes/cliCtrl.js',
+          '/app/clientes/cliServ.js',          
+          '/app/sedes/sedesCtrl.js',
+          '/app/sedes/sedesServ.js',
+          '/app/filtros/pagFilt.js'
         ],
         development: [
           '/js/angular.js',
@@ -76,16 +72,14 @@ var   coreHelpers = {},
           '/app/ui.js',
           '/app/app.js',
           '/app/main/mainCtrl.js',
-          '/app/main/mainServ.js'
-          //,'/app/directorio/directorioCtrl.js',
-          // '/app/directorio/directorioServ.js',
-          // '/app/directorio/directorioFilt.js',
-          // '/app/inicio/inicioCtrl.js',
-          // '/app/usuario/usuarioServ.js',
-          // '/app/administracion/adminCtrl.js',
-          // '/app/paginas/paginasCtrl.js',
-          // '/app/paginas/paginasServ.js',
-          // '/app/calendario/calendarioDir.js'
+          '/app/main/mainServ.js',
+          '/app/productos/prodCtrl.js',
+          '/app/productos/prodServ.js',
+          '/app/clientes/cliCtrl.js',
+          '/app/clientes/cliServ.js',          
+          '/app/sedes/sedesCtrl.js',
+          '/app/sedes/sedesServ.js',
+          '/app/filtros/pagFilt.js'
         ]
       };
 

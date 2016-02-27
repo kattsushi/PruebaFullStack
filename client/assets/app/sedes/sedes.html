@@ -1,0 +1,74 @@
+      <div class="md-whiteframe-z2" layout="column" ng-cloak flex="100" >
+    <md-content  layout="column" class="md-whiteframe-z2"  layout-padding flex="75" flex-gt-sm="100">
+      <h1 class=".md-display-3"> Crud Sedes</h1>
+      <md-divider ></md-divider>
+      <md-content flex="70" id="content" layout="column" padding="40px">
+          
+            <md-item-content >
+            <md-input-container class="md-icon-float" style="{margin:0px; padding-top:2em;}">
+                <input required ng-model="newSede.sede" id="sInput"  placeholder="Sede"/>
+                <div ng-messages="newSede.sede.$error">
+                    <div ng-message="required">Nombre de la sede requerido</div>
+                </div>
+            </md-input-container>
+            </md-item-content>
+            
+            <md-item-content >
+                <md-input-container class="md-icon-float" style="margin:0px">
+                    <input  required ng-model="newSede.direccion" id="sInput"  placeholder="Direccion"/>
+                </md-input-container>
+                <div ng-messages="newSede.direccion.$error">
+                    <div ng-message="required">Descripcion requeridos</div>
+                </div>
+            </md-item-content>     
+            
+            <md-item-content>
+                <md-button  class="md-raised md-primary"
+                        aria-label="sedes"
+                        ng-click="saveSede()">
+                    Guardar
+                </md-button>   
+                
+        <table class="table table-striped table-bordered">
+        
+        <thead> 
+        <tr>
+            <th>
+                <input type="text" ng-model="buscar" style="width:100%" placeholder="Buscar">
+            </th>
+        </tr>
+        <tr>
+            <th>Sede</th>
+            <th>Direccion</th>
+            <th>Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="Sede in sedes | filter : buscar | startFrom : currentPage * pageSize |  limitTo : pageSize">
+            <td>{[{ Sede.sede }]}</td>
+            <td>{[{ Sede.direccion }]}</td>
+            <td>
+                <a   ng-click="edit(Sede.id)">editar</a> | 
+                <a   ng-click="delete(Sede.id)">eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+        </table>    
+ <md-item-content layout-align="center center">
+      <md-button type="button"
+       aria-label="atras"
+       class="md-icon-button"
+       ng-disabled=" currentPage == 0"
+       ng-click="currentPage = currentPage-1"
+       name="Atras"><i style="font-size:1.5em" class="fa fa-chevron-left"></i></md-button>
+        {[{currentPage+1}]} / {[{numeroDePag()}]}
+      <md-button type="button"
+        aria-label="siguiente"
+        class="md-icon-button"
+        ng-disabled="currentPage >= numeroDeSedes / pageSize - 1"
+        ng-click="currentPage = currentPage+1"
+       name="Siguiente"><i style="font-size:1.5em" class="fa fa-chevron-right"></i></md-button>
+       <md-item-content>
+ </md-content>
+    </md-content>
+   </div>

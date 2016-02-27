@@ -94,6 +94,21 @@ function appConfig ($routeProvider,
       controller : 'mainCtrl',
       constrollerAs: 'vm'
     })
+    .when('/clientes', {
+      templateUrl: 'app/clientes/clientes.html',
+      controller : 'cliCtrl',
+      constrollerAs: 'cli'
+    })
+    .when('/productos', {
+      templateUrl: 'app/productos/productos.html',
+      controller : 'prodCtrl',
+      constrollerAs: 'pro'
+    })
+    .when('/sedes', {
+      templateUrl: 'app/sedes/sedes.html',
+      controller : 'sedesCtrl',
+      constrollerAs: 'sed'
+    })
     .otherwise({
       redirectTo: '/'
     });

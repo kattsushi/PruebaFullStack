@@ -1,179 +1,110 @@
 (function(){
     'use strict'
-    function mainCtrl($scope,
-                      $timeout,
-                      $mdSidenav,
-                      $rootScope,
-                      mainService,
-                      $mdDialog,
-                      $mdMedia,
-                      $cookieStore,
-                      $location,
-                      $http,
-                      $q,
-                      $log ) {
+    function mainCtrl($scope, $timeout, $mdSidenav,
+                      $rootScope, mainServ, prodServ, $mdDialog,
+                      $mdMedia, $cookieStore, $location,
+                      $http, $q, $log ) {
+    var vm = this;
+    
+ 
+     //   var data = {documento: doc };
+       
+       
+        $scope.compras = [];
+        mainServ.query().$promise.then(function (data) {
+              data.forEach(function(e) {
+                prodServ.query().$promise.then(function (pro) {
+                    for (var i = 0; i < pro.length; i++) {
+                        if ( pro[i] == e.id ){
+                            e.push(pro[i]);
+                            console.log($scope.compras.productos);
+                        };
+                        
+                    }
+                })  
+                $scope.compras.push(e);
+              }, this); 
+        console.log($scope.compras['productos']);              
+        $scope.numeroDeCompras = $scope.compras.length;                                
+        });
 
-            var vm = this;
-
-              var datos2 = [{"id":1,"usuario":69,
-                             "titulo":"inicio","link":"inicio",
-                             "activo":"Y","tags":" ",
-                             "descripcion":" ","creado":"12-12-2015",
-                             "actualizado":"12-12-2015",
-                             "Submenu":[{"id":1,"nombre":"Al dia",
-                             "ruta":"Aldia","paginaId":1}]},
-                            {"id":2,"usuario":69,
-                              "titulo":"quienes somos","link":"compañia",
-                              "activo":"Y","tags":" ",
-                              "descripcion":" ","creado":"12-12-2015",
-                              "actualizado":"12-12-2015",
-                              "Submenu":
-                                   [{"id":1,"nombre":"Mision",
-                                   "ruta":"mision","paginaId":2},
-                                   {"id":2,"nombre":"Vision",
-                                   "ruta":"mision","paginaId":2},
-                                   {"id":3,"nombre":"Politicas",
-                                   "ruta":"politicas","paginaId":2},
-                                   {"id":4,"nombre":"Valores",
-                                   "ruta":"valores","paginaId":2},
-                                   {"id":5,"nombre":"Reseña Historica",
-                                   "ruta":"reseña","paginaId":2},
-                                   {"id":6,"nombre":"Junta Directiva",
-                                   "ruta":"junta","paginaId":2},
-                                   {"id":7,"nombre":"Organigrama",
-                                   "ruta":"organigrama","paginaId":2}]},
-                             {"id":3,"usuario":69,
-                               "titulo":"informacion general","link":"informacion",
-                               "activo":"Y","tags":" ",
-                               "descripcion":" ","creado":"12-12-2015",
-                               "actualizado":"12-12-2015",
-                               "Submenu":
-                                    [{"id":1,"nombre":"Normativas Generales",
-                                    "ruta":"Normativas","paginaId":3},
-                                    {"id":2,"nombre":"Codigo de Etica",
-                                    "ruta":"codigo","paginaId":3},
-                                    {"id":3,"nombre":"Sucursales",
-                                    "ruta":"Sucursales","paginaId":3},
-                                    {"id":4,"nombre":"Estadisticas Generales",
-                                    "ruta":"Estadisticas","paginaId":3},
-                                    {"id":5,"nombre":"Herramientas de Analisis",
-                                    "ruta":"Herramientas","paginaId":3},
-                                    {"id":6,"nombre":"Factores de Prestamo Hipotec.",
-                                    "ruta":"factores","paginaId":3},
-                                    {"id":7,"nombre":"Circular Prestadores de Servicios y Proveedores",
-                                    "ruta":"circular","paginaId":3}]},
-                            {"id":4,"usuario":69,
-                              "titulo":"productos","link":"productos",
-                              "activo":"Y","tags":" ","descripcion":" ",
-                              "creado":"12-12-2015","actualizado":"12-12-2015",
-                              "Submenu":
-                                    [{"id":1,"nombre":"Personas",
-                                    "ruta":"personas","paginaId":4},
-                                    {"id":2,"nombre":"Automovil y Recuperaciones",
-                                    "ruta":"automovil","paginaId":4},
-                                    {"id":3,"nombre":"Patrimoniales",
-                                    "ruta":"Patrimoniales","paginaId":4},
-                                    {"id":4,"nombre":"Fianzas",
-                                    "ruta":"Fianzas","paginaId":4},
-                                    {"id":5,"nombre":"Ingenieria",
-                                    "ruta":"Ingenieria","paginaId":4},
-                                    {"id":6,"nombre":"Riesgos Diversos",
-                                    "ruta":"Riesgos","paginaId":4},
-                                    {"id":7,"nombre":"Reaseguro",
-                                    "ruta":"Reaseguro","paginaId":4},
-                                    {"id":8,"nombre":"Embarcacion Transporte y Aviacion",
-                                    "ruta":"transporte","paginaId":4}]},
-                            {"id":5,"usuario":69,
-                              "titulo":"area administrativa","link":"administracion",
-                              "activo":"Y","tags":" ",
-                              "descripcion":" ","creado":"12-12-2015",
-                              "actualizado":"12-12-2015",
-                              "Submenu":
-                                    [{"id":1,"nombre":"Administracion",
-                                    "ruta":"administracion","paginaId":5},
-                                    {"id":2,"nombre":"Fianzas",
-                                    "ruta":"Fianzas","paginaId":5},
-                                    {"id":3,"nombre":"Informatica",
-                                    "ruta":"Informatica","paginaId":5},
-                                    {"id":4,"nombre":"Recursos Humanos",
-                                    "ruta":"rrhh","paginaId":5}]},
-                            {"id":6,"usuario":69,
-                              "titulo":"unidades de control","link":"unidades",
-                              "activo":"Y","tags":" ","descripcion":" ",
-                              "creado":"12-12-2015","actualizado":"12-12-2015",
-                              "Submenu":
-                                    [{"id":1,"nombre":"Auditoria Interna",
-                                    "ruta":"Auditoria","paginaId":6},
-                                    {"id":2,"nombre":"Legitimacion de Capitales",
-                                    "ruta":"Legitimacion","paginaId":6},
-                                    {"id":3,"nombre":"Consultoria Juridica",
-                                    "ruta":"Consultoria","paginaId":6},
-                                    {"id":4,"nombre":"Seguridad",
-                                    "ruta":"seguridad","paginaId":6},
-                                    {"id":4,"nombre":"Relaciones Publicas e Institucionales",
-                                    "ruta":"Relaciones","paginaId":6}]},
-                          ];
-
-      vm.titulos = datos2;
-
-         var data = mainService.dinamico.query().$promise.then(function (data) {
-                    var x = 1+1;
-         });
-            // vm.titulos = datos;
-        //   vm.titulos = datos2;
-
-
-            //    console.log(JSON.parse(vm.titulos));
-
-            vm.onClickMenu = function () {
+    
+             
+    $scope.onClickMenu = function () {
                 $mdSidenav('left').toggle();
             }
-
-            /*---------------------------------------------
-            Control de cookies para autenticar usuario
-            */
-            $scope.usrConectado = {nombre: "", nivel: '', estaConectado: ''};
-
-            var usr = $cookieStore.get('usuario');
-
-            if (usr != null) {
-              $scope.usrConectado.nombre = usr.nombre;
-              $scope.usrConectado.nivel = usr.nivel;
-              $scope.usrConectado.estaConectado = true;
-            }else {
-              $scope.usrConectado.valogin = false
-            };
-
-            vm.salir = function() {
-              $scope.usrConectado = {nombre: '', nivel: '', estaConectado: ''};
-
-              $cookieStore.remove('estaConectado');
-              $cookieStore.remove('usuario');
-
-              $location.path('/inicio');
-            };
-
-
-
-
-    //------------------------------------------------------------------------------------------------------
-
-
-
-
+    
+    var uid = 1;       
+    // Guardar Sede y Actualizar---------------------------------------- 
+    $scope.saveSede = function() {
+        if($scope.newSede.id == null) {
+            $scope.newSede.id = uid++;
+            $scope.compras.push($scope.newSede);
+            $scope.numeroDeCompras = $scope.compras.length;
+            mainServ.save($scope.newSede);
+            console.log($scope.numeroDeCompras);
+        } else {
+            for(var i in $scope.compras) {
+                if($scope.compras[i].id == $scope.newSede.id) {
+                    $scope.compras[i] = $scope.newSede;
+                    var data = {id: $scope.compras[i].id };
+                    mainServ.update(data, $scope.newSede).$promise.then(function (e) {
+                            alert("elemento actualizado");
+                        }, function (err) {
+                        console.log(err); 
+                        });
+                    }
+                }                
+        }   
+        $scope.newSede = {};
     }
-      angular.module('App')
-             .controller('mainCtrl',['$scope',
-                                     '$timeout',
-                                     '$mdSidenav',
-                                     '$rootScope',
-                                     'mainService',
-                                     '$mdDialog',
-                                     '$mdMedia',
-                                     '$cookieStore',
-                                     '$location',
-                                     '$http',
-                                     '$q',
-                                     '$log',
-                                     mainCtrl]);
+
+    // Eliminar Sede----------------------------------------------------- 
+    // Observacion:si el Sede tiene compras no se eliminara por constrain
+    // Todo : cachear el error del constrain
+    $scope.delete = function(id) {
+      for(var i in $scope.compras) {
+        if($scope.compras[i].id == id) {
+            var data = {id: $scope.compras[i].id };
+            mainServ.delete({},data).$promise.then(function (e) {
+                    alert("elemento eliminado");
+                }, function (err) {
+                   console.log(err); 
+            });             
+            $scope.compras.splice(i,1);
+            $scope.newSede = {};
+            $scope.numeroDeCompras = $scope.compras.length;
+            console.log($scope.numeroDeCompras);
+            }
+        }
+    }
+    
+    // Seleccionar Sede para editarlo---------------------------------
+    $scope.edit = function(id) {
+        console.log(id);
+        for(var i in $scope.compras) {
+            if($scope.compras[i].id == id) {
+                $scope.newSede = angular.copy($scope.compras[i]);
+            }
+        }
+    }   
+    // Control para el paginado------------------------------------------ 
+    $scope.pageSize     = 1;
+    $scope.currentPage  = 0;
+    $scope.numeroDePag = function () {
+         
+    if ($scope.numeroDeCompras > $scope.pageSize) {
+            return Math.ceil( $scope.numeroDeCompras / $scope.pageSize);            
+    }else{
+             return 1;
+    }
+}
+}
+//------------------------------------------------------------------------------------------------------
+angular.module('App')
+        .controller('mainCtrl',['$scope', '$timeout','$mdSidenav',
+                                '$rootScope', 'mainServ', 'prodServ', '$mdDialog',
+                                '$mdMedia', '$cookieStore','$location',
+                                '$http', '$q', '$log',
+                                mainCtrl]);
 })();

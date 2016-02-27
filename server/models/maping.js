@@ -1,140 +1,169 @@
 'use strict'
 //--------------------------------------------------------------
-var Sequelize = require('sequelize');
-var pkg       = require('../../package.json');
+var Sequelize = require('sequelize'),
+          pkg = require('../../package.json');
 //--------------------------------------------------------------
 // Configurar la base de datos con sequelize
 //--------------------------------------------------------------
-var sequelize = new Sequelize("database","usuario","pass",{
-      dialect:"sqlite", //OTROS VALORES: postgres, mysql, mariadb
+var sequelize = new Sequelize("pruebafsj","root","",{
+      dialect:"mysql", //OTROS VALORES: postgres, mysql, mariadb
 	    //la propiedad storage SOLO ES PARA sqlite
-	    storage:__dirname + pkg.config.sqlite.storage,
-      define:{
-		  timestamps:false,
-      freezeTableName:true
-	           }
+	    loggin: false,
+      define: {
+        timestamps: false,
+        freezeTableName: true
+        }
     });
 //--------------------------------------------------------------
 //EL CODIGO EN ESTA FUNCION SE EJECTUA
 //SOLO HASTA QUE LA OPERCION ASINCRONA (AUTHENTICATE) TERMINA
 sequelize.authenticate().then(function(){
-  console.log('Base de datos lista para trabajar' + __dirname + pkg.config.sqlite.storage);
+  console.log('Base de datos lista para trabajar');
 });
 //--------------------------------------------------------------
 // Mapeo de tablas
 //--------------------------------------------------------------
-var Usuario = sequelize.define("usuarios",{
+
+// Clientes -----------------------------------
+
+var Clientes = sequelize.define("clientes",{
       id: {
           primaryKey:true,
           type: Sequelize.INTEGER,
           autoIncrement :true
           },
-      usuario : Sequelize.TEXT,
-      nombre : Sequelize.TEXT,
-      contraseña: Sequelize.TEXT,
-      dominio: Sequelize.TEXT,
-      nivel : Sequelize.INTEGER,
-      activo : Sequelize.TEXT,
-      correo : Sequelize.TEXT,
-      nota : Sequelize.TEXT
+      documento : Sequelize.INTEGER,
+      nombres : Sequelize.TEXT,
+      detalles: Sequelize.TEXT
       },
       { freezeTableName: true,
-        tableName:"usuarios"}
-      );
-//--------------------------------------------------------------
-var Pagina = sequelize.define("paginas", {
+        tableName:"clientes"});
+//--------------------------------------------
+
+// Compras -----------------------------------
+
+var Compras = sequelize.define("compras", {
       id: {
           primaryKey: true,
           type: Sequelize.INTEGER,
           autoIncrement: true
       },
-      usuario: Sequelize.INTEGER,
-      titulo: Sequelize.TEXT,
-      link: Sequelize.TEXT,
-      activo: Sequelize.TEXT,
-      tags: Sequelize.TEXT,
+      id_cliente: Sequelize.INTEGER,
+      id_producto: Sequelize.INTEGER,
+      id_sede: Sequelize.INTEGER,
+      precio: Sequelize.INTEGER,
       descripcion: Sequelize.TEXT,
-      creado: Sequelize.TEXT,
-      actualizado: Sequelize.TEXT
+      fecha: Sequelize.DATE
       },{ freezeTableName :true,
-          tableName: "paginas"});
-//--------------------------------------------------------------
-var Item = sequelize.define("items", {
+          tableName: "compras"});
+//-------------------------------------------
+
+// Sedes ------------------------------------
+
+var Sedes = sequelize.define("sedes", {
       id: {
         primaryKey: true,
         type:Sequelize.INTEGER,
         autoIncrement:true
       },
-      nombre:Sequelize.TEXT,
-      pagina:Sequelize.INTEGER,
-      contenido:Sequelize.INTEGER,
-      usuario:Sequelize.INTEGER,
-      creado:Sequelize.TEXT,
-      actualizado:Sequelize.TEXT,
-      mostrar:Sequelize.TEXT,
-      logeado:Sequelize.TEXT
+      sede:Sequelize.TEXT,
+      direccion:Sequelize.TEXT
       },{freezeTableName:true,
-         tableName: "items"});
-//--------------------------------------------------------------
-var Submenu = sequelize.define("submenu",{
+         tableName: "sedes"});
+//--------------------------------------------
+
+// Productos ---------------------------------
+
+var Productos = sequelize.define("productos",{
       id: {
           primaryKey: true,
           type: Sequelize.INTEGER,
           autoIncrement :true
           },
-      nombre : Sequelize.TEXT,
-      ruta: Sequelize.TEXT,
-      paginaId: Sequelize.INTEGER
+      producto: Sequelize.TEXT,
+      precio: Sequelize.INTEGER,
+      descripcion: Sequelize.TEXT
       },
       { freezeTableName: true,
-        tableName:"submenu"}
-      );
-//--------------------------------------------------------------
-var Directorio = sequelize.define("directorio",{
+        tableName:"productos"});
+//-----------------------------------------------
+
+// Log ------------------------------------------
+
+var Log = sequelize.define("log",{
       id: {
           primaryKey: true,
           type: Sequelize.INTEGER,
           autoIncrement :true
           },
-      nombre : Sequelize.TEXT,
-      apellido : Sequelize.TEXT,
-      ubicacion : Sequelize.TEXT,
-      cargo : Sequelize.TEXT,
-      departmento : Sequelize.TEXT,
-      extension: Sequelize.TEXT,
-      correo : Sequelize.TEXT,
-      perfil1 : Sequelize.TEXT,
-      perfil2 : Sequelize.TEXT,
+      fecha : Sequelize.DATE,
+      descripcion : Sequelize.TEXT
       },
       { freezeTableName: true,
-        tableName:"directorio"}
-      );
+        tableName:"log"});
 
 //--------------------------------------------------------------
-//------------Mapeo Paginas - Submenu 1 - N
+//--Mapeo Productos - Compras - Submenu 1 - N
 //--------------------------------------------------------------
-Usuario.hasOne(Directorio,{
-                     foreignKey:"id",
-                     as:"Directorio"
+Compras.hasOne( Productos,{
+                    foreignKey:"id_producto",
+                    as :"Productos"
                         });
-Usuario.belongsTo(Directorio,{
-    foreignKey:"id",
-    as :"Directorio"
-});
+Compras.belongsTo( Productos, {
+                  foreingKey: "id",
+                  as: "Productos"});
 //--------------------------------------------------------------
-//------------Mapeo Paginas - Submenu 1 - N
+//--Mapeo Clientes - Compras 1 - N
 //--------------------------------------------------------------
-Pagina.hasMany(Submenu,{
-                     foreignKey:"paginaId",
-                     as:"Submenu"
+/*
+Clientes.hasMany( Compras,{
+                     foreignKey:"id_cliente"
                         });
+//--------------------------------------------------------------
+//--Mapeo Sedes - Compras 1 - N
+//--------------------------------------------------------------
+Sedes.hasMany( Compras,{
+                     foreignKey:"id_sede"
+                        });  
+
+//--------------------------------------------------------------
+//--Mapeo Compras - Sedes 1 - 1
+//--------------------------------------------------------------
+Compras.belongsTo( Sedes, {
+        as : "Sede",
+        foreingKey: "id_sede"
+})
+
+
+//--------------------------------------------------------------
+//--Mapeo Compras - Productos 1 - 1
+//--------------------------------------------------------------
+
+Compras.belongsTo( Productos, {
+        foreingKey: "id_producto",
+        as : "Producto"
+}) 
+    */                       
+//--------------------------------------------------------------
+//--Mapeo Compras - Cliente 1 - 1
+//--------------------------------------------------------------
+Compras.hasOne( Productos, {
+        foreingKey: "id_producto"
+}) 
+Compras.belongsTo( Productos, {
+        foreingKey: "id_producto",
+        as : "Producto"
+})                                              
+                        
 //--------------------------------------------------------------
 // Exportar modelos a otros modulos
 //--------------------------------------------------------------
-module.exports.Usuario = Usuario;
-module.exports.Directorio = Directorio;
-module.exports.Pagina  = Pagina;
-module.exports.Item  = Item;
-module.exports.Submenu  = Submenu;
+module.exports.Clientes  = Clientes;
+module.exports.Compras   = Compras;
+module.exports.Sedes     = Sedes;
+module.exports.Productos = Productos;
+module.exports.Log       = Log;
 module.exports.sequelize = sequelize;
+
+//---
 module.exports.PRUEBA = "hola";

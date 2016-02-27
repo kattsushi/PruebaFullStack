@@ -8,26 +8,26 @@ config = {
         port: '3306',
         user: 'root',
         password: '',
-        database: 'express-seed',
+        database: 'pruebafsj',
         multipleStatements: true
     },
     cookie: {
         secret: '3095cd1975c64b9f8ee24b5346a4e593'
     },
     session: {
-        secret: '1234567890QWERTY'
+        secret: '1234567890ANDRESJIMENEZ'
     },
     mail: {
         transport: 'SMTP',
         options: {
             service: 'Mailgun',
             auth: {
-                user: '', // mailgun username
-                pass: '' // mailgun password
+                user: '', // 
+                pass: '' // 
             }
         }
     }
 };
 
-// Export config
+// Exportar configuracion
 module.exports = config;

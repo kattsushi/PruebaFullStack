@@ -21,6 +21,7 @@ Nombres:
 id productos Productos sede precio
 
 Total Precio:
+<<<<<<< HEAD
 
 Si el precio en la tabla de compra no existe, se debe tomar por defecto el precio Debe ser posible exportar a PDF y solicitar la información en formato JSON.
 
@@ -32,12 +33,26 @@ Si el precio en la tabla de compra no existe, se debe tomar por defecto el preci
 
     Automatizar un reporte semanal, que sea enviado a un correo electrónico y contenga los siguientes cálculos: a. Diferencia promedio, máxima y mínima entre tabla productos columna precio y tabla compras columna precio. b. Número de compras. c. Total ganancias. d. Compras promedio por minuto.
 
+=======
+
+Si el precio en la tabla de compra no existe, se debe tomar por defecto el precio Debe ser posible exportar a PDF y solicitar la información en formato JSON.
+
+    Cada vez que se realice select, update o delete; se debe ingresar el registro en la tabla log, describiendo el tipo de movimiento y algún dato que crea necesario o de gran ayuda para una bitácora.
+
+    Plantear herramientas y tecnologías necesarias para su publicación, seguridad y mantenimiento de esta aplicación, bajo el supuesto de una concurrencia diaria de 500.000 a 1.000.000 usuarios.
+
+    Crear un plan de escabilidad al momento de tener un alto volumen de datos, escrituras y lecturas en disco.
+
+    Automatizar un reporte semanal, que sea enviado a un correo electrónico y contenga los siguientes cálculos: a. Diferencia promedio, máxima y mínima entre tabla productos columna precio y tabla compras columna precio. b. Número de compras. c. Total ganancias. d. Compras promedio por minuto.
+
+>>>>>>> test
 NOTA: Se le hará llegar un script SQL y un archivo .JSON uno para trabajar con BD Relacional , y el otro para bd mongodb. Queda a su elección cuál base de datos usar
 
 Url archivo Mysql: https://drive.google.com/open?id=0B7Y2Jg6ddM0eTU9KOE5jbzVwUUU
 
 ## Configuracion del entorno de desarrollo
 #### Requisitos
+<<<<<<< HEAD
 
 * [Nodejs](http://www.nodejs.org/)
 * [Node Package Manager](https://npmjs.org/) (NPM)
@@ -45,6 +60,15 @@ Url archivo Mysql: https://drive.google.com/open?id=0B7Y2Jg6ddM0eTU9KOE5jbzVwUUU
 
 #### Dependencias
 
+=======
+
+* [Nodejs](http://www.nodejs.org/)
+* [Node Package Manager](https://npmjs.org/) (NPM)
+* [Git](http://git-scm.com/)
+
+#### Dependencias
+
+>>>>>>> test
 * [Gulp](http://gulpjs.com/) (Automatizador de tareas)
 * [Bower](http://bower.io/) (Administrador de paquetes para el Fron-end)
 * [Sass](http://sass-lang.com/) (Preprosesador de Hojas de Estilos)
@@ -52,11 +76,19 @@ Url archivo Mysql: https://drive.google.com/open?id=0B7Y2Jg6ddM0eTU9KOE5jbzVwUUU
 #### Instalacion
 Corre estos comandos para la instalacion.
 #####1. Instalar Gulp y Bower
+<<<<<<< HEAD
 
     $ sudo npm install -g gulp bower
 
 #####2. Instalar dependencias
 
+=======
+
+    $ sudo npm install -g gulp bower
+
+#####2. Instalar dependencias
+
+>>>>>>> test
     $ npm install
     $ bower install
 
@@ -96,3 +128,9 @@ Accede al servicio local , entra en tu navegador en el siguiente enlace:
     config.development.js   --> Archivo de configuracion para el desarrollo
     config.js               --> Archivo de configuracion por defecto.
     gulpfile.js             --> Archivo de configuracion de gulp
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> test

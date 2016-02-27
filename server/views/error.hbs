@@ -1,31 +1,5 @@
 {{!< layout}}
 
-<md-sidenav flex="1" class="site-sidenav md-sidenav-left md-whiteframe-z2"
-    md-component-id="left"
-    md-is-locked-open="$mdMedia('gt-xs')">
-
-  <md-toolbar md-tall>
-    <div layout="column" class="md-toolbar-tools-bottom inset">
-     <a ng-href="/#!/" class="docs-logo ">
-       <img src="img/logoblanco.gif" alt="" style="max-height:100px;padding:0px 10px 0px 10px" />
-    </a>
-   </div>
- </md-toolbar>
-
-    <md-content md-scroll-y flex role="navigation" >
-      <nav class="mainNav">
-    		<ul>
-    			<li ng-repeat="menu in vm.titulos"><a href="/#!/">{[{ menu.titulo | uppercase }]}</a>
-    				<ul data-ng-show="menu.Submenu != 0">
-    					<li ng-repeat="submenu in menu.Submenu"><a href="/#!/">{[{ submenu.nombre }]}</a></li>
-    				</ul>
-    			</li>
-    		</ul>
-    	</nav>
-    </md-content>
-</md-sidenav>
-
- <!-- fin de la barra de navegacion izquierda-->
 <div layout="column" flex tabindex="-1" role="main">
 
     {{> navbar}}
@@ -44,7 +18,7 @@
                 </md-card-title-media>
               </md-card-title>
               <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-href="/#!/">Atras</md-button>
+                <md-button ng-click="goBack()">Atras</md-button>
               </md-card-actions>
             </md-card>
           </div>
