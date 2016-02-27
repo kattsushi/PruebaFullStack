@@ -39,7 +39,13 @@ var   coreHelpers = {},
           '/app/ui.js',
           '/app/app.js',
           '/app/main/mainCtrl.js',
-          '/app/main/mainServ.js'
+          '/app/main/mainServ.js',
+          '/app/productos/prodCtrl.js',
+          '/app/productos/prodServ.js',
+          '/app/clientes/cliCtrl.js',
+          '/app/clientes/cliServ.js',          
+          '/app/sedes/sedesCtrl.js',
+          '/app/sedes/sedesServ.js'
         ],
         development: [
           '/js/angular.js',
@@ -65,7 +71,13 @@ var   coreHelpers = {},
           '/app/ui.js',
           '/app/app.js',
           '/app/main/mainCtrl.js',
-          '/app/main/mainServ.js'
+          '/app/main/mainServ.js',
+          '/app/productos/prodCtrl.js',
+          '/app/productos/prodServ.js',
+          '/app/clientes/cliCtrl.js',
+          '/app/clientes/cliServ.js',          
+          '/app/sedes/sedesCtrl.js',
+          '/app/sedes/sedesServ.js'
         ]
       };
 

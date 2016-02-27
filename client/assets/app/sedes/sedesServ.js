@@ -1,7 +1,7 @@
 (function(){
   'use strict'
   function mainService ($resource, $location) {
-      var uri = $location.protocol() +'://'+location.host+'/api/compras/:id'
+      var uri = $location.protocol() +'://'+location.host+'/api/sedes/:id'
       var factory = {
          dinamico : $resource( uri, {},
          {get :{method:'GET',transformResponse:

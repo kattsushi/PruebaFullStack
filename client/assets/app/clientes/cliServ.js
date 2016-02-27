@@ -1,7 +1,7 @@
 (function(){
   'use strict'
-  function mainService ($resource, $location) {
-      var uri = $location.protocol() +'://'+location.host+'/api/compras/:id'
+  function cliServ ($resource, $location) {
+      var uri = $location.protocol() +'://'+location.host+'/api/clientes/:documento'
       var factory = {
          dinamico : $resource( uri, {},
          {get :{method:'GET',transformResponse:
@@ -18,6 +18,6 @@
 
 
   angular.module('App')
-         .factory('mainService', ['$resource','$location',mainService]);
+         .factory('cliServ', ['$resource','$location',cliServ]);
 
 })();
