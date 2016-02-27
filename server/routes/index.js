@@ -19,6 +19,73 @@ router.get('/', function(req, res, next) {
         env : isProduction
         });
   });
+  
+// Clientes--------------------------------------------
+router.get('/api/clientes/:id', function(req, res, next) {
+    
+    modelo.Clientes.findAll({ where : {
+                            id : req.params.id }
+                             }).then(function (cli) {
+          res.json(cli);
+
+        });
+});
+
+router.get('/api/clientes/', function(req, res, next) {
+    
+    modelo.Clientes.findAll({}).then(function (cli) {
+          res.json(cli);
+        });
+});
+  
+
+router.post('/api/clientes/', function(req, res, next) {
+    var data = req.body;
+    modelo.Clientes.create({
+      documento : data.documento,
+      nombres : data.nombres,
+      detalles: data.detalles
+    }).then(function (cli) {
+        modelo.Log.create({
+          fecha: new Date(),
+          descripcion: data.id + " " + data.documento + " INSERT CLIENTE"  
+          }).then(function (e) {
+            console.log("se creo correctamente el registro en la tabla Clientes");
+      })
+    })
+    console.log("este es mi dni: " + data.documento);
+});  
+  
+    
+router.put('/api/clientes/:id', function(req, res, next) {
+    var id = req.params.id;
+    console.log("este es mi id: " + id);
+});  
+  
+router.delete('/api/clientes/:id', function(req, res, next) {
+    var id = req.params.id;
+    
+    modelo.Clientes.destroy({
+                  where: {
+                      id: id //this will be your id that you want to delete
+                  }
+        }).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+          if(rowDeleted === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE CLIENTE"  
+                              }).then(function (e) {
+                                console.log('Eliminado registro del cliente');                
+                            })
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+    
+    console.log("este es mi id: " + id);
+});   
+  
+  
 
 // Productos ----------------------------------------------
 router.get('/api/productos/:id', function(req, res, next) {
@@ -37,22 +104,6 @@ router.get('/api/productos/', function(req, res, next) {
 });
 
 
-// Clientes--------------------------------------------
-router.get('/api/clientes/:id', function(req, res, next) {
-    
-    modelo.Clientes.findAll({ where : {
-                            id : req.params.id }
-                             }).then(function (cli) {
-          res.json(cli);
-
-        });
-});
-router.get('/api/clientes/', function(req, res, next) {
-    
-    modelo.Clientes.findAll({}).then(function (cli) {
-          res.json(cli);
-        });
-});
 
 
 // Sedes --------------------------------------------

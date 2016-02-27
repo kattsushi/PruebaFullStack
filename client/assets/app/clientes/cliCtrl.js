@@ -17,7 +17,7 @@
                           
                       }, this);
                       $scope.numeroDeclientes = $scope.clientes.length;
-                      console.warn($scope.clientes);
+                      
          });
              
     $scope.onClickMenu = function () {
@@ -38,6 +38,8 @@
              $scope.newCliente.id = uid++;
              $scope.clientes.push($scope.newCliente);
              $scope.numeroDeclientes = $scope.clientes.length;
+             
+             cliServ.save($scope.newCliente);
              console.log($scope.numeroDeclientes);
         } else {
             
@@ -58,6 +60,8 @@
                 $scope.clientes.splice(i,1);
                 $scope.newCliente = {};
                 $scope.numeroDeclientes = $scope.clientes.length;
+                
+                cliServ.delete({id: $scope.clientes.id})
                 console.log($scope.numeroDeclientes);
             }
         }
@@ -74,7 +78,7 @@
     }   
 
 
-     $scope.pageSize     = 5;
+     $scope.pageSize     = 8;
      $scope.currentPage  = 0;
      
       
