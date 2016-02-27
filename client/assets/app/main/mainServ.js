@@ -1,25 +1,27 @@
 (function(){
   'use strict'
   function mainServ ($resource, $location) {
-      var uri = $location.protocol() +'://'+location.host+'/api/compras/:id'
+      var uri = $location.protocol() +'://'+location.host+'/api/compras/:documento'
       return $resource( uri, {},
          {
            get :{
               method:'GET',
               transformResponse: function (data, headers) {
                     return JSON.parse(data).list; 
-                    }
+                    },
+              params: {documento: '@documento'},      
+              isArray: true,
                   },
            post:{
               method: 'POST'
            },
            delete:{
              method:'DELETE',
-             params: {id: '@id'}
+             params: {documento: '@documento'}
            },
            update : {
              method:'PUT',
-             params : {id:'@id'}
+             params : {documento:'@documento'}
            },  
            isArray: true,
          });

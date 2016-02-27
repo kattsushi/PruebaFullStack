@@ -105,9 +105,13 @@ var Log = sequelize.define("log",{
 //--------------------------------------------------------------
 //--Mapeo Productos - Compras - Submenu 1 - N
 //--------------------------------------------------------------
-Productos.hasMany( Compras,{
-                    foreignKey:"id_producto"
+Compras.hasOne( Productos,{
+                    foreignKey:"id_producto",
+                    as :"Productos"
                         });
+Compras.belongsTo( Productos, {
+                  foreingKey: "id",
+                  as: "Productos"});
 //--------------------------------------------------------------
 //--Mapeo Clientes - Compras 1 - N
 //--------------------------------------------------------------

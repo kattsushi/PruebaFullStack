@@ -299,7 +299,8 @@ router.get('/api/compras/:id', function(req, res, next) {
 router.get('/api/compras/', function(req, res, next) {
     
     modelo.Compras.findAll({
-      attributes : ['id','id_cliente','id_producto',
+      attributes : ['id',
+                    'id_cliente','id_producto',
                     'id_sede','precio','descripcion','fecha']
     }).then(function (sed) {
           res.json(sed);

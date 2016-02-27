@@ -1,21 +1,34 @@
 (function(){
     'use strict'
     function mainCtrl($scope, $timeout, $mdSidenav,
-                      $rootScope, mainServ, $mdDialog,
+                      $rootScope, mainServ, prodServ, $mdDialog,
                       $mdMedia, $cookieStore, $location,
                       $http, $q, $log ) {
-    var compras = this;
+    var vm = this;
     
-    $scope.compras = [];
+ 
+     //   var data = {documento: doc };
+       
+       
+        $scope.compras = [];
+        mainServ.query().$promise.then(function (data) {
+              data.forEach(function(e) {
+                prodServ.query().$promise.then(function (pro) {
+                    for (var i = 0; i < pro.length; i++) {
+                        if ( pro[i] == e.id ){
+                            e.push(pro[i]);
+                            console.log($scope.compras.productos);
+                        };
+                        
+                    }
+                })  
+                $scope.compras.push(e);
+              }, this); 
+        console.log($scope.compras['productos']);              
+        $scope.numeroDeCompras = $scope.compras.length;                                
+        });
+
     
-    mainServ.query().$promise.then(function (data) {
-                      data.forEach(function(e) {
-                       $scope.compras.push(e);
-                          
-                      }, this);
-                      $scope.numeroDeCompras = $scope.compras.length;
-                                       
-    });
              
     $scope.onClickMenu = function () {
                 $mdSidenav('left').toggle();
@@ -76,7 +89,7 @@
         }
     }   
     // Control para el paginado------------------------------------------ 
-    $scope.pageSize     = 8;
+    $scope.pageSize     = 1;
     $scope.currentPage  = 0;
     $scope.numeroDePag = function () {
          
@@ -90,7 +103,7 @@
 //------------------------------------------------------------------------------------------------------
 angular.module('App')
         .controller('mainCtrl',['$scope', '$timeout','$mdSidenav',
-                                '$rootScope', 'mainServ', '$mdDialog',
+                                '$rootScope', 'mainServ', 'prodServ', '$mdDialog',
                                 '$mdMedia', '$cookieStore','$location',
                                 '$http', '$q', '$log',
                                 mainCtrl]);
