@@ -130,9 +130,9 @@ router.get('/api/productos/', function(req, res, next) {
 router.post('/api/productos/', function(req, res, next) {
     var data = req.body;
     modelo.Productos.create({
-      documento : data.producto,
-      nombres : data.precio,
-      detalles: data.descripcion
+      producto : data.producto,
+      precio : data.precio,
+      descripcion: data.descripcion
     }).then(function (pro) {
         modelo.Log.create({
           fecha: new Date(),
@@ -151,9 +151,9 @@ router.put('/api/productos/:id', function(req, res, next) {
     var data = req.body;
     
     modelo.Productos.update(
-                 {documento : data.producto,
-                  nombres : data.precio,
-                  detalles : data.descripcion},
+                 {producto : data.producto,
+                  precio : data.precio,
+                  descripcion : data.descripcion},
                   {where: { id: id }}).then(function(rowUpdate){ 
           if(rowUpdate === 0){
              modelo.Log.create({
@@ -220,8 +220,8 @@ router.get('/api/sedes/', function(req, res, next) {
 router.post('/api/sedes/', function(req, res, next) {
     var data = req.body;
     modelo.Sedes.create({
-      documento : data.sede,
-      detalles: data.direccion
+      sede : data.sede,
+      direccion: data.direccion
     }).then(function (sed) {
         modelo.Log.create({
           fecha: new Date(),
@@ -239,9 +239,10 @@ router.put('/api/sedes/:id', function(req, res, next) {
     
     var data = req.body;
     
+    console.log("esto esta bien" + id)
     modelo.Sedes.update(
-                 {documento : data.sede,
-                  detalles : data.direccion},
+                 {sede : data.sede,
+                  direccion : data.direccion},
                   {where: { id: id }}).then(function(rowUpdate){ 
           if(rowUpdate === 0){
              modelo.Log.create({
@@ -251,7 +252,8 @@ router.put('/api/sedes/:id', function(req, res, next) {
                                 console.log('Actualizado el registro de la sede'); 
                                 console.log("este es mi id: " + id);               
                             }, function(err){
-                              console.log("algo salio mal -- " + err); 
+                              console.log("algo salio mal -- " + err);
+                              console.log("esto esta bien" + id + data.sede) 
                           });
               }     
         }, function(err){
