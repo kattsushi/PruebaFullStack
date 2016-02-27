@@ -1,47 +1,75 @@
   <div class="md-whiteframe-z2" layout="column" ng-cloak flex="100" >
     <md-content  layout="column" class="md-whiteframe-z2"  layout-padding flex="75" flex-gt-sm="100">
-      <h1 class=".md-display-3"> crud clientes</h1>
+      <h1 class=".md-display-3"> Crud clientes</h1>
       <md-divider ></md-divider>
-      <md-content flex="70" id="content" layout="column" >
-   <div>
-    <form class="well">
-    <label>Documento :</label> 
-        <input type="text" name="name" ng-model="newcontact.name"/>
-    <label>Nombres :</label> 
-        <input type="text" name="email" ng-model="newcontact.email"/>
-    <label>Detalle :</label> 
-        <input type="text" name="phone" ng-model="newcontact.phone"/>
-        <br/>
-        <input type="hidden" ng-model="newcontact.id" />
+      <md-content flex="70" id="content" layout="column" padding="40px">
+          
+            <md-item-content >
+            <md-input-container class="md-icon-float" style="{margin:0px; padding-top:2em;}">
+                <input ng-model="newCliente.documento" id="sInput"  placeholder="Documento"/>
+            </md-input-container>
+            </md-item-content>
+            
+            <md-item-content >
+                <md-input-container class="md-icon-float" style="margin:0px">
+                    <input ng-model="newCliente.nombres" id="sInput"  placeholder="Nombres"/>
+                </md-input-container>
+            </md-item-content>     
+            
+            <md-item-content >
+                <md-input-container class="md-icon-float" style="margin:0px">
+                    <input ng-model="newCliente.detalles" id="sInput"  placeholder="Detalles"/>
+                </md-input-container>
+            </md-item-content>    
+            <md-item-content>
+                <md-button  class="md-raised md-primary"
+                        aria-label="productos"
+                        ng-click="saveCliente()">
+                    Guardar
+                </md-button>   
+                
+        <table class="table table-striped table-bordered">
         
-    <md-button  class="md-raised md-primary"
-                aria-label="productos"
-                ng-click="saveContact()">
-            Guardar
-    </md-button>
-    </form>
-<table class="table table-striped table-bordered">
-<thead> 
-<tr>
-    <th>Documento</th>
-    <th>Nombres</th>
-    <th>Detalles</th>
-    <th>Accion</th>
-</tr>
-</thead>
-<tbody>
-<tr ng-repeat="contact in contacts">
-    <td>{[{ contact.name }]}</td>
-    <td>{[{ contact.email }]}</td>
-    <td>{[{ contact.phone }]}</td>
-    <td>
-        <a   ng-click="edit(contact.id)">editar</a> | 
-        <a   ng-click="delete(contact.id)">eliminar</a>
-    </td>
- </tr>
-</tbody>
-</table>    
-</div>
+        <thead> 
+        <tr>
+            <th>
+                <input type="text" ng-model="buscar" style="width:100%" placeholder="Buscar">
+            </th>
+        </tr>
+        <tr>
+            <th>Documento</th>
+            <th>Nombres</th>
+            <th>Detalles</th>
+            <th>Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="Cliente in clientes | filter : buscar | startFrom : currentPage * pageSize |  limitTo : pageSize">
+            <td>{[{ Cliente.documento }]}</td>
+            <td>{[{ Cliente.nombres }]}</td>
+            <td>{[{ Cliente.detalles }]}</td>
+            <td>
+                <a   ng-click="edit(Cliente.id)">editar</a> | 
+                <a   ng-click="delete(Cliente.id)">eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+        </table>    
+ <md-item-content layout-align="center center">
+      <md-button type="button"
+       aria-label="atras"
+       class="md-icon-button"
+       ng-disabled=" currentPage == 0"
+       ng-click="currentPage = currentPage-1"
+       name="Atras"><i style="font-size:1.5em" class="fa fa-chevron-left"></i></md-button>
+        {[{currentPage+1}]} / {[{numeroDePag()}]}
+      <md-button type="button"
+        aria-label="siguiente"
+        class="md-icon-button"
+        ng-disabled="currentPage >= numeroDeclientes / pageSize - 1"
+        ng-click="currentPage = currentPage+1"
+       name="Siguiente"><i style="font-size:1.5em" class="fa fa-chevron-right"></i></md-button>
+       <md-item-content>
  </md-content>
     </md-content>
    </div>
