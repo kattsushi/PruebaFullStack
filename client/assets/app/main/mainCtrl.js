@@ -9,24 +9,21 @@
  
      //   var data = {documento: doc };
        
-       
-        $scope.compras = [];
-        mainServ.query().$promise.then(function (data) {
-              data.forEach(function(e) {
-                prodServ.query().$promise.then(function (pro) {
-                    for (var i = 0; i < pro.length; i++) {
-                        if ( pro[i] == e.id ){
-                            e.push(pro[i]);
-                            console.log($scope.compras.productos);
-                        };
-                        
-                    }
-                })  
-                $scope.compras.push(e);
-              }, this); 
-        console.log($scope.compras['productos']);              
-        $scope.numeroDeCompras = $scope.compras.length;                                
-        });
+     $scope.BuscarDoc = function (doc) {
+        if ( doc !== '') {
+            
+            console.log(doc); 
+            $scope.compras = [];
+            mainServ.query().$promise.then(function (data) {
+                data.forEach(function(e) {
+                    $scope.compras.push(e);
+                }, this); 
+            console.log($scope.compras['productos']);              
+            $scope.numeroDeCompras = $scope.compras.length;                                
+            });
+        } 
+ 
+     }  
 
     
              
@@ -89,7 +86,7 @@
         }
     }   
     // Control para el paginado------------------------------------------ 
-    $scope.pageSize     = 1;
+    $scope.pageSize     = 10;
     $scope.currentPage  = 0;
     $scope.numeroDePag = function () {
          

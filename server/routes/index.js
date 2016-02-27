@@ -297,14 +297,41 @@ router.get('/api/compras/:id', function(req, res, next) {
 });
 
 router.get('/api/compras/', function(req, res, next) {
+
+    modelo.Productos.findAll({include : [{
+                                  model: modelo.Compras,
+                                  as :"Compras",
+                                  include :[{
+                                   model: modelo.Sedes,
+                                   as : "Sedes"
+                                  },{
+                                   model: modelo.Clientes,
+                                   as : "Cliente" 
+                                  }]
+                                }]
+                          }).then(function (comp) {
+          if (comp == null){
+            return null;
+          } else {
+            res.jsonp(comp);
+            }
+    });
+
+
+
     
-    modelo.Compras.findAll({
+/*   modelo.Compras.findAll({
       attributes : ['id',
                     'id_cliente','id_producto',
-                    'id_sede','precio','descripcion','fecha']
+                    'id_sede','precio','descripcion','fecha'],
+      include:[{
+              attributes : ['id','producto','precio','descripcion'],
+              model: modelo.Productos,
+              as : "Producto"
+                   }]
     }).then(function (sed) {
           res.json(sed);
-        });
+        });*/
 });
 
 
@@ -383,10 +410,6 @@ router.delete('/api/compras/:id', function(req, res, next) {
     
     console.log("este es mi id: " + id);
 });  
-
-
-
-
 
 
 router.get('/inicio',function(req,res,next) {

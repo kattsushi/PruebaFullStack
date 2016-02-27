@@ -1,3 +1,4 @@
+/* global utilities */
 'use strict'
 //--------------------------------------------------------------
 var Sequelize = require('sequelize'),
@@ -26,7 +27,7 @@ sequelize.authenticate().then(function(){
 
 // Clientes -----------------------------------
 
-var Clientes = sequelize.define("clientes",{
+var Clientes = sequelize.define("Clientes",{
       id: {
           primaryKey:true,
           type: Sequelize.INTEGER,
@@ -42,7 +43,7 @@ var Clientes = sequelize.define("clientes",{
 
 // Compras -----------------------------------
 
-var Compras = sequelize.define("compras", {
+var Compras = sequelize.define("Compras", {
       id: {
           primaryKey: true,
           type: Sequelize.INTEGER,
@@ -60,7 +61,7 @@ var Compras = sequelize.define("compras", {
 
 // Sedes ------------------------------------
 
-var Sedes = sequelize.define("sedes", {
+var Sedes = sequelize.define("Sedes", {
       id: {
         primaryKey: true,
         type:Sequelize.INTEGER,
@@ -74,7 +75,7 @@ var Sedes = sequelize.define("sedes", {
 
 // Productos ---------------------------------
 
-var Productos = sequelize.define("productos",{
+var Productos = sequelize.define("Productos",{
       id: {
           primaryKey: true,
           type: Sequelize.INTEGER,
@@ -85,12 +86,13 @@ var Productos = sequelize.define("productos",{
       descripcion: Sequelize.TEXT
       },
       { freezeTableName: true,
-        tableName:"productos"});
+        tableName:"productos",
+        underscored: false});
 //-----------------------------------------------
 
 // Log ------------------------------------------
 
-var Log = sequelize.define("log",{
+var Log = sequelize.define("Log",{
       id: {
           primaryKey: true,
           type: Sequelize.INTEGER,
@@ -100,18 +102,64 @@ var Log = sequelize.define("log",{
       descripcion : Sequelize.TEXT
       },
       { freezeTableName: true,
-        tableName:"log"});
+        tableName:"log",
+        instanceMethods: {
+        toJSON: function()
+        {
+            return utilities.removeSnakeAttributes(this.get());
+        }
+    }});
 
 //--------------------------------------------------------------
 //--Mapeo Productos - Compras - Submenu 1 - N
 //--------------------------------------------------------------
-Compras.hasOne( Productos,{
-                    foreignKey:"id_producto",
-                    as :"Productos"
+
+Productos.hasOne(Compras,{
+                     foreignKey:"id_producto",
+                     as:"Compras"
+                        });
+Compras.belongsTo(Productos,{
+    foreignKey:"id",
+    as :"Compras"
+});
+
+Sedes.hasOne(Compras,{
+  foreignKey :"id_sede",
+  as: "Sedes"
+})
+
+Compras.belongsTo(Sedes,{
+  foreignKey: "id_sede",
+  as :"Sedes"
+})
+
+Clientes.hasOne(Compras,{
+  foreignKey :"id_cliente",
+  as: "Cliente"
+})
+
+Compras.belongsTo(Clientes,{
+  foreignKey: "id_cliente",
+  as :"Cliente"
+})
+
+/*
+Compras.hasOne(Productos,{
+                     foreignKey:"id",
+                     as:"Producto"
+                        });
+Productos.belongsTo(Compras,{
+    foreignKey:"id_producto"
+});
+*
+
+
+
+/*Productos.hasMany( Compras,{
+                    foreignKey:"owner"
                         });
 Compras.belongsTo( Productos, {
-                  foreingKey: "id",
-                  as: "Productos"});
+                  foreingKey: "owner"});*/
 //--------------------------------------------------------------
 //--Mapeo Clientes - Compras 1 - N
 //--------------------------------------------------------------
@@ -147,13 +195,13 @@ Compras.belongsTo( Productos, {
 //--------------------------------------------------------------
 //--Mapeo Compras - Cliente 1 - 1
 //--------------------------------------------------------------
-Compras.hasOne( Productos, {
+/*Compras.hasOne( Productos, {
         foreingKey: "id_producto"
 }) 
 Compras.belongsTo( Productos, {
         foreingKey: "id_producto",
         as : "Producto"
-})                                              
+})*/                                              
                         
 //--------------------------------------------------------------
 // Exportar modelos a otros modulos
