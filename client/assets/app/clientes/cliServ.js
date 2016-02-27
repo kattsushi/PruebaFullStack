@@ -1,4 +1,4 @@
-/* global resourceResponseHandler */
+
 (function(){
   'use strict'
   function cliServ ($resource, $location) {

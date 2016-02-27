@@ -119,12 +119,80 @@ router.get('/api/productos/:id', function(req, res, next) {
 });
 router.get('/api/productos/', function(req, res, next) {
      
-    modelo.Productos.findAll({}).then(function (prod) {
+    modelo.Productos.findAll({
+      attributes : ['id','producto','precio','descripcion']
+    }).then(function (prod) {
           res.json(prod);
         });
 });
 
 
+router.post('/api/productos/', function(req, res, next) {
+    var data = req.body;
+    modelo.Productos.create({
+      documento : data.producto,
+      nombres : data.precio,
+      detalles: data.descripcion
+    }).then(function (pro) {
+        modelo.Log.create({
+          fecha: new Date(),
+          descripcion: data.id + " " + data.documento + " INSERT PRODUCTO"  
+          }).then(function (e) {
+            console.log("se creo correctamente el registro en la tabla pRODUCTOS");
+      })
+    })
+    console.log("este es mi dni: " + data.documento);
+});  
+  
+    
+router.put('/api/productos/:id', function(req, res, next) {
+    var id = req.params.id;
+    
+    var data = req.body;
+    
+    modelo.Productos.update(
+                 {documento : data.producto,
+                  nombres : data.precio,
+                  detalles : data.descripcion},
+                  {where: { id: id }}).then(function(rowUpdate){ 
+          if(rowUpdate === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE CLIENTE"  
+                              }).then(function (e) {
+                                console.log('Actualizado el registro del cliente'); 
+                                console.log("este es mi id: " + id);               
+                            }, function(err){
+                              console.log("algo salio mal -- " + err); 
+                          });
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+   
+});  
+  
+router.delete('/api/productos/:id', function(req, res, next) {
+    var id = req.params.id;
+    
+    modelo.Productos.destroy({
+          where: { id: id }}).then(function(rowDeleted){ 
+          if(rowDeleted === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE PRODUCTOS"  
+                              }).then(function (e) {
+                                console.log('Eliminado registro del producto');                
+                            }, function(err){
+                                console.log("algo salio mal -- " + err); 
+                            });
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+    
+    console.log("este es mi id: " + id);
+});  
 
 
 // Sedes --------------------------------------------
@@ -141,10 +209,82 @@ router.get('/api/sedes/:id', function(req, res, next) {
 
 router.get('/api/sedes/', function(req, res, next) {
     
-    modelo.Sedes.findAll({}).then(function (sed) {
+    modelo.Sedes.findAll({
+      attributes : ['id','sede','direccion']
+    }).then(function (sed) {
           res.json(sed);
         });
 });
+
+
+router.post('/api/sedes/', function(req, res, next) {
+    var data = req.body;
+    modelo.Sedes.create({
+      documento : data.sede,
+      detalles: data.direccion
+    }).then(function (sed) {
+        modelo.Log.create({
+          fecha: new Date(),
+          descripcion: data.id + " " + data.documento + " INSERT SEDE"  
+          }).then(function (e) {
+            console.log("se creo correctamente el registro en la tabla sedes");
+      })
+    })
+    console.log("este es mi dni: " + data.documento);
+});  
+  
+    
+router.put('/api/sedes/:id', function(req, res, next) {
+    var id = req.params.id;
+    
+    var data = req.body;
+    
+    modelo.Sedes.update(
+                 {documento : data.sede,
+                  detalles : data.direccion},
+                  {where: { id: id }}).then(function(rowUpdate){ 
+          if(rowUpdate === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE CLIENTE"  
+                              }).then(function (e) {
+                                console.log('Actualizado el registro de la sede'); 
+                                console.log("este es mi id: " + id);               
+                            }, function(err){
+                              console.log("algo salio mal -- " + err); 
+                          });
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+   
+});  
+  
+router.delete('/api/sedes/:id', function(req, res, next) {
+    var id = req.params.id;
+    
+    modelo.Sedes.destroy({
+          where: { id: id }}).then(function(rowDeleted){ 
+          if(rowDeleted === 0){
+             modelo.Log.create({
+                          fecha: new Date(),
+                          descripcion: id + " DELETE PRODUCTOS"  
+                              }).then(function (e) {
+                                console.log('Eliminado registro del producto');                
+                            }, function(err){
+                                console.log("algo salio mal -- " + err); 
+                            });
+              }     
+        }, function(err){
+            console.log("algo salio mal -- " + err); 
+        });
+    
+    console.log("este es mi id: " + id);
+});  
+
+
+
+
 
 router.get('/api/compras/:documento', function(req, res, next) {
     

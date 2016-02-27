@@ -1,179 +1,99 @@
 (function(){
     'use strict'
-    function mainCtrl($scope,
-                      $timeout,
-                      $mdSidenav,
-                      $rootScope,
-                      mainService,
-                      $mdDialog,
-                      $mdMedia,
-                      $cookieStore,
-                      $location,
-                      $http,
-                      $q,
-                      $log ) {
-
-            var vm = this;
-
-              var datos2 = [{"id":1,"usuario":69,
-                             "titulo":"inicio","link":"inicio",
-                             "activo":"Y","tags":" ",
-                             "descripcion":" ","creado":"12-12-2015",
-                             "actualizado":"12-12-2015",
-                             "Submenu":[{"id":1,"nombre":"Al dia",
-                             "ruta":"Aldia","paginaId":1}]},
-                            {"id":2,"usuario":69,
-                              "titulo":"quienes somos","link":"compañia",
-                              "activo":"Y","tags":" ",
-                              "descripcion":" ","creado":"12-12-2015",
-                              "actualizado":"12-12-2015",
-                              "Submenu":
-                                   [{"id":1,"nombre":"Mision",
-                                   "ruta":"mision","paginaId":2},
-                                   {"id":2,"nombre":"Vision",
-                                   "ruta":"mision","paginaId":2},
-                                   {"id":3,"nombre":"Politicas",
-                                   "ruta":"politicas","paginaId":2},
-                                   {"id":4,"nombre":"Valores",
-                                   "ruta":"valores","paginaId":2},
-                                   {"id":5,"nombre":"Reseña Historica",
-                                   "ruta":"reseña","paginaId":2},
-                                   {"id":6,"nombre":"Junta Directiva",
-                                   "ruta":"junta","paginaId":2},
-                                   {"id":7,"nombre":"Organigrama",
-                                   "ruta":"organigrama","paginaId":2}]},
-                             {"id":3,"usuario":69,
-                               "titulo":"informacion general","link":"informacion",
-                               "activo":"Y","tags":" ",
-                               "descripcion":" ","creado":"12-12-2015",
-                               "actualizado":"12-12-2015",
-                               "Submenu":
-                                    [{"id":1,"nombre":"Normativas Generales",
-                                    "ruta":"Normativas","paginaId":3},
-                                    {"id":2,"nombre":"Codigo de Etica",
-                                    "ruta":"codigo","paginaId":3},
-                                    {"id":3,"nombre":"Sucursales",
-                                    "ruta":"Sucursales","paginaId":3},
-                                    {"id":4,"nombre":"Estadisticas Generales",
-                                    "ruta":"Estadisticas","paginaId":3},
-                                    {"id":5,"nombre":"Herramientas de Analisis",
-                                    "ruta":"Herramientas","paginaId":3},
-                                    {"id":6,"nombre":"Factores de Prestamo Hipotec.",
-                                    "ruta":"factores","paginaId":3},
-                                    {"id":7,"nombre":"Circular Prestadores de Servicios y Proveedores",
-                                    "ruta":"circular","paginaId":3}]},
-                            {"id":4,"usuario":69,
-                              "titulo":"productos","link":"productos",
-                              "activo":"Y","tags":" ","descripcion":" ",
-                              "creado":"12-12-2015","actualizado":"12-12-2015",
-                              "Submenu":
-                                    [{"id":1,"nombre":"Personas",
-                                    "ruta":"personas","paginaId":4},
-                                    {"id":2,"nombre":"Automovil y Recuperaciones",
-                                    "ruta":"automovil","paginaId":4},
-                                    {"id":3,"nombre":"Patrimoniales",
-                                    "ruta":"Patrimoniales","paginaId":4},
-                                    {"id":4,"nombre":"Fianzas",
-                                    "ruta":"Fianzas","paginaId":4},
-                                    {"id":5,"nombre":"Ingenieria",
-                                    "ruta":"Ingenieria","paginaId":4},
-                                    {"id":6,"nombre":"Riesgos Diversos",
-                                    "ruta":"Riesgos","paginaId":4},
-                                    {"id":7,"nombre":"Reaseguro",
-                                    "ruta":"Reaseguro","paginaId":4},
-                                    {"id":8,"nombre":"Embarcacion Transporte y Aviacion",
-                                    "ruta":"transporte","paginaId":4}]},
-                            {"id":5,"usuario":69,
-                              "titulo":"area administrativa","link":"administracion",
-                              "activo":"Y","tags":" ",
-                              "descripcion":" ","creado":"12-12-2015",
-                              "actualizado":"12-12-2015",
-                              "Submenu":
-                                    [{"id":1,"nombre":"Administracion",
-                                    "ruta":"administracion","paginaId":5},
-                                    {"id":2,"nombre":"Fianzas",
-                                    "ruta":"Fianzas","paginaId":5},
-                                    {"id":3,"nombre":"Informatica",
-                                    "ruta":"Informatica","paginaId":5},
-                                    {"id":4,"nombre":"Recursos Humanos",
-                                    "ruta":"rrhh","paginaId":5}]},
-                            {"id":6,"usuario":69,
-                              "titulo":"unidades de control","link":"unidades",
-                              "activo":"Y","tags":" ","descripcion":" ",
-                              "creado":"12-12-2015","actualizado":"12-12-2015",
-                              "Submenu":
-                                    [{"id":1,"nombre":"Auditoria Interna",
-                                    "ruta":"Auditoria","paginaId":6},
-                                    {"id":2,"nombre":"Legitimacion de Capitales",
-                                    "ruta":"Legitimacion","paginaId":6},
-                                    {"id":3,"nombre":"Consultoria Juridica",
-                                    "ruta":"Consultoria","paginaId":6},
-                                    {"id":4,"nombre":"Seguridad",
-                                    "ruta":"seguridad","paginaId":6},
-                                    {"id":4,"nombre":"Relaciones Publicas e Institucionales",
-                                    "ruta":"Relaciones","paginaId":6}]},
-                          ];
-
-      vm.titulos = datos2;
-
-         var data = mainService.dinamico.query().$promise.then(function (data) {
-                    var x = 1+1;
-         });
-            // vm.titulos = datos;
-        //   vm.titulos = datos2;
-
-
-            //    console.log(JSON.parse(vm.titulos));
-
-            vm.onClickMenu = function () {
+    function prodCtrl($scope, $timeout, $mdSidenav,
+                      $rootScope, prodServ, $mdDialog,
+                      $mdMedia, $cookieStore, $location,
+                      $http, $q, $log ) {
+    var prod = this;
+    
+    $scope.productos = [];
+    
+    prodServ.query().$promise.then(function (data) {
+                      data.forEach(function(e) {
+                       $scope.productos.push(e);
+                          
+                      }, this);
+                      $scope.numeroDeProductos = $scope.productos.length;
+                      console.log(data);
+                      
+    });
+             
+    $scope.onClickMenu = function () {
                 $mdSidenav('left').toggle();
             }
-
-            /*---------------------------------------------
-            Control de cookies para autenticar usuario
-            */
-            $scope.usrConectado = {nombre: "", nivel: '', estaConectado: ''};
-
-            var usr = $cookieStore.get('usuario');
-
-            if (usr != null) {
-              $scope.usrConectado.nombre = usr.nombre;
-              $scope.usrConectado.nivel = usr.nivel;
-              $scope.usrConectado.estaConectado = true;
-            }else {
-              $scope.usrConectado.valogin = false
-            };
-
-            vm.salir = function() {
-              $scope.usrConectado = {nombre: '', nivel: '', estaConectado: ''};
-
-              $cookieStore.remove('estaConectado');
-              $cookieStore.remove('usuario');
-
-              $location.path('/inicio');
-            };
-
-
-
-
-    //------------------------------------------------------------------------------------------------------
-
-
-
-
+    
+    var uid = 1;       
+    // Guardar Producto y Actualizar---------------------------------------- 
+    $scope.saveProducto = function() {
+        if($scope.newProducto.id == null) {
+            $scope.newProducto.id = uid++;
+            $scope.productos.push($scope.newProducto);
+            $scope.numeroDeProductos = $scope.productos.length;
+            prodServ.save($scope.newProducto);
+            console.log($scope.numeroDeProductos);
+        } else {
+            for(var i in $scope.productos) {
+                if($scope.productos[i].id == $scope.newProducto.id) {
+                    $scope.productos[i] = $scope.newProducto;
+                    var data = {id: $scope.productos[i].id };
+                    prodServ.update(data, $scope.newProducto).$promise.then(function (e) {
+                            alert("elemento actualizado");
+                        }, function (err) {
+                        console.log(err); 
+                        });
+                    }
+                }                
+        }   
+        $scope.newProducto = {};
     }
-      angular.module('App')
-             .controller('mainCtrl',['$scope',
-                                     '$timeout',
-                                     '$mdSidenav',
-                                     '$rootScope',
-                                     'mainService',
-                                     '$mdDialog',
-                                     '$mdMedia',
-                                     '$cookieStore',
-                                     '$location',
-                                     '$http',
-                                     '$q',
-                                     '$log',
-                                     mainCtrl]);
+
+    // Eliminar Producto----------------------------------------------------- 
+    // Observacion:si el Producto tiene compras no se eliminara por constrain
+    // Todo : cachear el error del constrain
+    $scope.delete = function(id) {
+      for(var i in $scope.productos) {
+        if($scope.productos[i].id == id) {
+            var data = {id: $scope.productos[i].id };
+            prodServ.delete({},data).$promise.then(function (e) {
+                    alert("elemento eliminado");
+                }, function (err) {
+                   console.log(err); 
+            });
+            console.log($scope.productos[i].id);              
+            $scope.productos.splice(i,1);
+            $scope.newProducto = {};
+            $scope.numeroDeProductos = $scope.productos.length;
+            console.log($scope.numeroDeProductos);
+            }
+        }
+    }
+    
+    // Seleccionar Producto para editarlo---------------------------------
+    $scope.edit = function(id) {
+        console.log(id);
+        for(var i in $scope.productos) {
+            if($scope.productos[i].id == id) {
+                $scope.newProducto = angular.copy($scope.productos[i]);
+            }
+        }
+    }   
+    // Control para el paginado------------------------------------------ 
+    $scope.pageSize     = 8;
+    $scope.currentPage  = 0;
+    $scope.numeroDePag = function () {
+         
+    if ($scope.numeroDeProductos > $scope.pageSize) {
+            return Math.ceil( $scope.numeroDeProductos / $scope.pageSize);            
+    }else{
+             return 1;
+    }
+}
+}
+//------------------------------------------------------------------------------------------------------
+angular.module('App')
+        .controller('prodCtrl',['$scope', '$timeout','$mdSidenav',
+                                '$rootScope', 'prodServ', '$mdDialog',
+                                '$mdMedia', '$cookieStore','$location',
+                                '$http', '$q', '$log',
+                                prodCtrl]);
 })();
