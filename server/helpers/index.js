@@ -45,7 +45,8 @@ var   coreHelpers = {},
           '/app/clientes/cliCtrl.js',
           '/app/clientes/cliServ.js',          
           '/app/sedes/sedesCtrl.js',
-          '/app/sedes/sedesServ.js'
+          '/app/sedes/sedesServ.js',
+          '/app/filtros/pagFilt.js'
         ],
         development: [
           '/js/angular.js',
@@ -77,7 +78,8 @@ var   coreHelpers = {},
           '/app/clientes/cliCtrl.js',
           '/app/clientes/cliServ.js',          
           '/app/sedes/sedesCtrl.js',
-          '/app/sedes/sedesServ.js'
+          '/app/sedes/sedesServ.js',
+          '/app/filtros/pagFilt.js'
         ]
       };
 

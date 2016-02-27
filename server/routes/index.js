@@ -54,6 +54,26 @@ router.get('/api/clientes/', function(req, res, next) {
         });
 });
 
+
+// Sedes --------------------------------------------
+
+router.get('/api/sedes/:id', function(req, res, next) {
+    
+    modelo.Sedes.findAll({ where : {
+                            id : req.params.id }
+                             }).then(function (sed) {
+          res.json(sed);
+
+        });
+});
+
+router.get('/api/sedes/', function(req, res, next) {
+    
+    modelo.Sedes.findAll({}).then(function (sed) {
+          res.json(sed);
+        });
+});
+
 router.get('/api/compras/:documento', function(req, res, next) {
     
     modelo.Compras.findAll({attributes:['id','id_producto',

@@ -6,14 +6,20 @@
           
             <md-item-content >
             <md-input-container class="md-icon-float" style="{margin:0px; padding-top:2em;}">
-                <input ng-model="newCliente.documento" id="sInput"  placeholder="Documento"/>
+                <input required ng-model="newCliente.documento" id="sInput"  placeholder="Documento"/>
+                <div ng-messages="newCliente.documento.$error">
+                    <div ng-message="required">Documento requerido</div>
+                </div>
             </md-input-container>
             </md-item-content>
             
             <md-item-content >
                 <md-input-container class="md-icon-float" style="margin:0px">
-                    <input ng-model="newCliente.nombres" id="sInput"  placeholder="Nombres"/>
+                    <input required ng-model="newCliente.nombres" id="sInput"  placeholder="Nombres"/>
                 </md-input-container>
+                <div ng-messages="newCliente.documento.$error">
+                    <div ng-message="required">Nombres requeridos</div>
+                </div>
             </md-item-content>     
             
             <md-item-content >

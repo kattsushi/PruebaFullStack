@@ -8,21 +8,27 @@
     var datos = [];
     cli.datos = datos;
 
-    var data = cliServ.dinamico.query().$promise.then(function (data) {
-                    var x = 1+1;
-                    return x;
-         });
-    cli.data = data;
+    $scope.clientes = [];
     
+    cliServ.query().$promise.then(function (data) {
+                      data.forEach(function(e) {
+                      
+                        $scope.clientes.push(e);
+                          
+                      }, this);
+                      $scope.numeroDeclientes = $scope.clientes.length;
+                      console.warn($scope.clientes);
+         });
+             
     $scope.onClickMenu = function () {
                 $mdSidenav('left').toggle();
             }
     
     var uid = 1;       
      
-    $scope.clientes = [
-        {id:0, 'documento': '20282731', 'nombres':'Andres Jimenez', 'detalles': '+58-426-1637-863'}
-    ];
+
+  
+    
     
 
     
@@ -80,26 +86,12 @@
              return 1;
          }
        }
-
-         
-            
-            
-    //------------------------------------------------------------------------------------------------------
     }
-    
-    function cliFilt () {
-        return function (input, start) {
-         start = +start;
-        return input.slice(start);
-    }
-  };
-
-        
-      angular.module('App')
-             .controller('cliCtrl',['$scope', '$timeout','$mdSidenav',
-                                     '$rootScope', 'cliServ', '$mdDialog',
-                                     '$mdMedia', '$cookieStore','$location',
-                                     '$http', '$q', '$log',
-                                     cliCtrl])
-             .filter('startFrom',[cliFilt]);
+//------------------------------------------------------------------------------------------------------
+angular.module('App')
+        .controller('cliCtrl',['$scope', '$timeout','$mdSidenav',
+                                '$rootScope', 'cliServ', '$mdDialog',
+                                '$mdMedia', '$cookieStore','$location',
+                                '$http', '$q', '$log',
+                                cliCtrl]);
 })();
