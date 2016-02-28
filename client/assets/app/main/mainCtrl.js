@@ -3,7 +3,7 @@
     function mainCtrl($scope, $timeout, $mdSidenav,
                       $rootScope, mainServ, prodServ, $mdDialog,
                       $mdMedia, $cookieStore, $location,
-                      $http, $q, $log ) {
+                      $http, $q, $log, $window ) {
     var vm = this;
     
  
@@ -20,22 +20,22 @@
                    $scope.precioTotal = e.Compras.precio
                 }, this);
             });
-           
             
-            
-        }  
-
-               
-     $scope.onClickMenu = function () {
-                $mdSidenav('left').toggle();
-            }
-
+    $scope.print = function () {
+            console.log('modal print');
+        
+            var tabla = document.querySelector('.table').innerHTML;
+            var miWindow = $window.open('', '', 'width=800, height=600');
+            miWindow.document.write(tabla);
+            miWindow.print();
+    };
+     }
 }
 //------------------------------------------------------------------------------------------------------
 angular.module('App')
         .controller('mainCtrl',['$scope', '$timeout','$mdSidenav',
                                 '$rootScope', 'mainServ', 'prodServ', '$mdDialog',
                                 '$mdMedia', '$cookieStore','$location',
-                                '$http', '$q', '$log',
+                                '$http', '$q', '$log', '$window',
                                 mainCtrl]);
 })();

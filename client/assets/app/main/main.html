@@ -6,7 +6,7 @@
       <md-content flex="70" id="content" layout="column" padding="40px">
           
                     
-        <table class="table table-striped table-bordered">
+        <table id ="tabla" class="table table-striped table-bordered">
         
         <thead> 
         <tr>
@@ -19,7 +19,7 @@
                     Buscar
                 </md-button>   
             </th>
-            <th> Nombres {[{ cliente }]} </th>
+            <th> Nombres:  {[{ cliente }]} </th>
         </tr>
         
         <tr>
@@ -38,6 +38,11 @@
          </tr>
          <tr>
              <td colspan="2">
+                  <md-button flex="10"  class="md-raised md-primary"
+                        aria-label="productos"
+                        ng-click="print()">
+                    Imprimir
+                </md-button> 
              </td>
              <th>
                 <span>Total Precio</span> 
@@ -48,8 +53,7 @@
          </tr>
         </tbody>
         </table>    
- 
- </md-content>
+        </md-content>
 
 </md-content>
 
