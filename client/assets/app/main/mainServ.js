@@ -6,9 +6,6 @@
          {
            get :{
               method:'GET',
-              transformResponse: function (data, headers) {
-                    return JSON.parse(data).list; 
-                    },
               params: {documento: '@documento'},      
               isArray: true,
                   },

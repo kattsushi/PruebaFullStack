@@ -15,11 +15,11 @@
                 <input type="number" ng-model="documento" style="width:20%" >
                   <md-button  class="md-raised md-primary"
                         aria-label="productos"
-                        ng-click="Buscar()">
+                        ng-click="buscar()">
                     Buscar
                 </md-button>   
             </th>
-            <th> Nombres {[{ Compra.Compra.Cliente.nombres }]} </th>
+            <th> Nombres {[{ cliente }]} </th>
         </tr>
         
         <tr>
@@ -30,37 +30,25 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="Compra in compras | filter : Compra.Compra.Cliente.documento | startFrom : currentPage * pageSize |  limitTo : pageSize">
+        <tr ng-repeat="Compra in compras | filter : Compra.Compra.Cliente.documento">
             <td>{[{ Compra.id }]}</td>
             <td>{[{ Compra.producto }]}</td>
             <td>{[{ Compra.Compras.Sedes.sede + " "+ Compra.Compras.Sedes.direccion }]}</td>
             <td>{[{ Compra.precio }]}</td>
          </tr>
          <tr>
-             <td>
-                 Total Precio
+             <td colspan="2">
              </td>
-             <td>
-                 {[{ Compra.Compras.precio }]}
-             </td>
+             <th>
+                <span>Total Precio</span> 
+             </th>
+             <th>
+                 <spam>{[{ precioTotal }]} </spam>
+             </th>
          </tr>
         </tbody>
         </table>    
- <md-item-content layout-align="center center">
-      <md-button type="button"
-       aria-label="atras"
-       class="md-icon-button"
-       ng-disabled=" currentPage == 0"
-       ng-click="currentPage = currentPage-1"
-       name="Atras"><i style="font-size:1.5em" class="fa fa-chevron-left"></i></md-button>
-        {[{currentPage+1}]} / {[{numeroDePag()}]}
-      <md-button type="button"
-        aria-label="siguiente"
-        class="md-icon-button"
-        ng-disabled="currentPage >= numeroDeCompras / pageSize - 1"
-        ng-click="currentPage = currentPage+1"
-       name="Siguiente"><i style="font-size:1.5em" class="fa fa-chevron-right"></i></md-button>
-       <md-item-content>
+ 
  </md-content>
 
 </md-content>
