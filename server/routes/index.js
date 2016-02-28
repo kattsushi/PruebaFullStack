@@ -285,7 +285,7 @@ router.delete('/api/sedes/:id', function(req, res, next) {
 });  
 
 // Compras  --------------------------------------------
-
+/*
 router.get('/api/compras/:id', function(req, res, next) {
     
     modelo.Sedes.findAll({ where : {
@@ -294,7 +294,7 @@ router.get('/api/compras/:id', function(req, res, next) {
           res.json(sed);
 
         });
-});
+});*/
 
 router.get('/api/compras/', function(req, res, next) {
 
@@ -306,9 +306,13 @@ router.get('/api/compras/', function(req, res, next) {
                                    as : "Sedes"
                                   },{
                                    model: modelo.Clientes,
-                                   as : "Cliente" 
+                                   as : "Cliente",
+                                   where : {
+                                    documento : req.query.documento
+                                  }, 
                                   }]
-                                }]
+                                }],
+                                
                           }).then(function (comp) {
           if (comp == null){
             return null;
@@ -334,7 +338,7 @@ router.get('/api/compras/', function(req, res, next) {
         });*/
 });
 
-
+/*
 router.post('/api/compras/', function(req, res, next) {
     var data = req.body;
     modelo.Compras.create({
@@ -353,7 +357,7 @@ router.post('/api/compras/', function(req, res, next) {
       })
     })
     console.log("este es mi dni: " + data.documento);
-});  
+});  */
   
     
 router.put('/api/compras/:id', function(req, res, next) {

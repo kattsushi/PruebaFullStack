@@ -1,7 +1,7 @@
 (function(){
   'use strict'
   function mainServ ($resource, $location) {
-      var uri = $location.protocol() +'://'+location.host+'/api/compras/:documento'
+      var uri = $location.protocol() +'://'+location.host+'/api/compras/'
       return $resource( uri, {},
          {
            get :{
