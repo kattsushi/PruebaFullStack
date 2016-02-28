@@ -4,12 +4,8 @@
                       $rootScope, mainServ, prodServ, $mdDialog,
                       $mdMedia, $cookieStore, $location,
                       $http, $q, $log, $window ) {
-    var vm = this;
-    
- 
-     //   var data = {documento: doc };
-       
-     $scope.buscar = function () {
+        
+     $scope.Buscar = function () {
             
             var data = {documento: $scope.documento };
             $scope.compras =  [];
@@ -19,6 +15,8 @@
                    $scope.cliente = e.Compras.Cliente.nombres;
                    $scope.precioTotal = e.Compras.precio
                 }, this);
+            },function (err) {
+                console.warn("no existen datos");
             });
             
     $scope.print = function () {
@@ -29,7 +27,7 @@
             miWindow.document.write(tabla);
             miWindow.print();
     };
-     }
+    }
 }
 //------------------------------------------------------------------------------------------------------
 angular.module('App')
