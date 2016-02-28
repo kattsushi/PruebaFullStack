@@ -24,7 +24,8 @@
         
             var tabla = document.querySelector('.table').innerHTML;
             var miWindow = $window.open('', '', 'width=800, height=600');
-            miWindow.document.write(tabla);
+            miWindow.document.write('<html><head>');
+            miWindow.document.write('<link rel="stylesheet" href="css/main.css" type="text/css"/> <title>Factura </title></head><body>' + tabla +'</body></html>' );
             miWindow.print();
     };
     }
