@@ -55,8 +55,18 @@
             <td>{[{ Cliente.nombres }]}</td>
             <td>{[{ Cliente.detalles }]}</td>
             <td>
-                <a   ng-click="edit(Cliente.id)">editar</a> | 
-                <a   ng-click="delete(Cliente.id)">eliminar</a>
+                <md-button  class="md-raised "
+                        aria-label="productos"
+                        ng-click="edit(Cliente.id)"">
+                   <i class="fa fa-pencil-square-o"></i>     
+                    Editar
+                </md-button>
+                <md-button  class="md-raised "
+                        aria-label="productos"
+                        ng-click="delete(Cliente.id)">
+                <i class="fa fa-trash"></i>
+                    Eliminar
+                </md-button>   
             </td>
         </tr>
         </tbody>

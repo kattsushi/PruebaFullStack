@@ -48,8 +48,18 @@
             <td>{[{ Sede.sede }]}</td>
             <td>{[{ Sede.direccion }]}</td>
             <td>
-                <a   ng-click="edit(Sede.id)">editar</a> | 
-                <a   ng-click="delete(Sede.id)">eliminar</a>
+                 <md-button  class="md-raised "
+                        aria-label="productos"
+                        ng-click="edit(Sede.id)">
+                   <i class="fa fa-pencil-square-o"></i>     
+                    Editar
+                </md-button>
+                <md-button  class="md-raised "
+                        aria-label="productos"
+                        ng-click="delete(Sede.id)">
+                <i class="fa fa-trash"></i>
+                    Eliminar
+                </md-button> 
             </td>
         </tr>
         </tbody>

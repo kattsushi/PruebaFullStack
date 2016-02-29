@@ -81,12 +81,63 @@
          
     if ($scope.numeroDeProductos > $scope.pageSize) {
             return Math.ceil( $scope.numeroDeProductos / $scope.pageSize);            
-    }else{
+        }else{
              return 1;
+        }
     }
+    
+    // Comprar Producto ------------------------------------------------------------
+    
+   
+     $scope.toBuy = function(ev, id) {
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+          
+         $scope.idProd = id;
+          $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'app/productos/modalCompra.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true,
+            fullscreen: useFullScreen
+          })
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+          $scope.$watch(function() {
+            return $mdMedia('xs') || $mdMedia('sm');
+          }, function(wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+          });
+          
+  };
+   
+   
+   function DialogController($scope, $mdDialog) {
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+        };
+      console.log($scope.idProd);
+            for(var i in $scope.productos) {
+                if($scope.productos[i].id == $scope.idProd) {
+                    $scope.buyProducto = angular.copy($scope.productos[i]);
+                }
+            }  
+     
 }
+
+    
+   
 }
-//------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 angular.module('App')
         .controller('prodCtrl',['$scope', '$timeout','$mdSidenav',
                                 '$rootScope', 'prodServ', '$mdDialog',

@@ -55,8 +55,24 @@
             <td>{[{ Producto.precio }]}</td>
             <td>{[{ Producto.descripcion }]}</td>
             <td>
-                <a   ng-click="edit(Producto.id)">editar</a> | 
-                <a   ng-click="delete(Producto.id)">eliminar</a>
+                <md-button  class="md-raised "
+                        aria-label="productos"
+                        ng-click="toBuy($event, Producto.id)">
+                <i class="fa fa-shopping-cart"></i>
+                    Comprar
+                </md-button>
+                <md-button  class="md-raised "
+                        aria-label="productos"
+                        ng-click="edit(Producto.id)">
+                   <i class="fa fa-pencil-square-o"></i>     
+                    Editar
+                </md-button>
+                <md-button  class="md-raised "
+                        aria-label="productos"
+                        ng-click="delete(Producto.id)">
+                <i class="fa fa-trash"></i>
+                    Eliminar
+                </md-button>       
             </td>
         </tr>
         </tbody>
