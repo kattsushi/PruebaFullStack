@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Comprar {[{ buyProducto  }]}
+        <h2>Comprar {[{ buyProductos.producto  }]}
         </h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
@@ -12,9 +12,15 @@
     </md-toolbar>
     <md-dialog-content>
       <div class="md-dialog-content">
-        <h2>Using .md-dialog-content class that sets the padding as the spec</h2>
-       
-       
+        <spam>Documento :</spam>
+        <input type="number" ng-model="documento" style="width:20%" >
+        <md-button  class="md-raised md-primary"
+                        aria-label="clientes"
+                        ng-click="Buscar($event)" style ="{padding:0!important;margin:0!important}">
+                    Buscar
+        </md-button>  
+        
+        <label ng-model="$scope.clienteCompra.nombres"></label>      
        
       </div>
     </md-dialog-content>

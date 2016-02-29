@@ -1,7 +1,7 @@
 (function(){
     'use strict'
     function prodCtrl($scope, $timeout, $mdSidenav,
-                      $rootScope, prodServ, $mdDialog,
+                      $rootScope, prodServ, cliServ, $mdDialog,
                       $mdMedia, $cookieStore, $location,
                       $http, $q, $log ) {
     var prod = this;
@@ -90,10 +90,26 @@
     
    
      $scope.toBuy = function(ev, id) {
-    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+            var useFullScreen = ($mdMedia('sm') || 
+                                $mdMedia('xs'))  && 
+                                $scope.customFullscreen;
           
-         $scope.idProd = id;
+          for(var i in $scope.productos) {
+                if($scope.productos[i].id == id) {
+                    $scope.buyProducto = angular.copy($scope.productos[i]);
+                }
+            }
+           $scope.clientes = [];
+    
+            cliServ.query().$promise.then(function (data) {
+                      data.forEach(function(e) {
+                       $scope.clientes.push(e); 
+                      }, this); 
+              
+     
           $mdDialog.show({
+            locals : {data : $scope.buyProducto,
+                      cliente: $scope.clientes }, 
             controller: DialogController,
             templateUrl: 'app/productos/modalCompra.html',
             parent: angular.element(document.body),
@@ -112,10 +128,25 @@
             $scope.customFullscreen = (wantsFullScreen === true);
           });
           
-  };
+  });
+     }
    
-   
-   function DialogController($scope, $mdDialog) {
+   function DialogController($scope, $mdDialog, data, cliente) {
+     
+      $scope.buyProductos = data;
+      
+      $scope.Buscar = function (ev) {
+          
+        $scope.clienteCompra = [];
+        cliente.forEach(function(e) {
+            if (e.documento == $scope.documento){
+                $scope.clienteCompra.push(e);
+            }
+        }, this);
+        
+        console.log($scope.clienteCompra)
+      }
+      
       $scope.hide = function() {
         $mdDialog.hide();
       };
@@ -124,14 +155,8 @@
       };
       $scope.answer = function(answer) {
         $mdDialog.hide(answer);
-        };
-      console.log($scope.idProd);
-            for(var i in $scope.productos) {
-                if($scope.productos[i].id == $scope.idProd) {
-                    $scope.buyProducto = angular.copy($scope.productos[i]);
-                }
-            }  
-     
+        };      
+           
 }
 
     
@@ -140,7 +165,7 @@
 //----------------------------------------------------------------------------------
 angular.module('App')
         .controller('prodCtrl',['$scope', '$timeout','$mdSidenav',
-                                '$rootScope', 'prodServ', '$mdDialog',
+                                '$rootScope', 'prodServ', 'cliServ', '$mdDialog',
                                 '$mdMedia', '$cookieStore','$location',
                                 '$http', '$q', '$log',
                                 prodCtrl]);
