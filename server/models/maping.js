@@ -6,7 +6,7 @@ var Sequelize = require('sequelize'),
 //--------------------------------------------------------------
 // Configurar la base de datos con sequelize
 //--------------------------------------------------------------
-var sequelize = new Sequelize("pruebafsj","root","",{
+/*var sequelize = new Sequelize("pruebafsj","root","",{
       dialect:"mysql", //OTROS VALORES: postgres, mysql, mariadb
 	    //la propiedad storage SOLO ES PARA sqlite
 	    loggin: false,
@@ -14,7 +14,19 @@ var sequelize = new Sequelize("pruebafsj","root","",{
         timestamps: false,
         freezeTableName: true
         }
-    });
+    });*/
+
+var sequelize = new Sequelize("database","usuario","pass",{
+    dialect:"sqlite", //OTROS VALORES: postgres, mysql, mariadb
+    //la propiedad storage SOLO ES PARA sqlite
+    storage:__dirname + pkg.config.sqlite.storage,
+    define:{
+        timestamps:false,
+    freezeTableName:true
+            }
+});   
+    
+    
 //--------------------------------------------------------------
 //EL CODIGO EN ESTA FUNCION SE EJECTUA
 //SOLO HASTA QUE LA OPERCION ASINCRONA (AUTHENTICATE) TERMINA
